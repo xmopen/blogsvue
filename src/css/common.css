@@ -1,0 +1,21 @@
+/* 参考: https://getcssscan.com/css-box-shadow-examples?ref=producthunt */
+.common_card_div_pc {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 2%;
+}
+
+.common_icon_size_pc {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+/* 进行固定 */
+.common_affix_div {
+    margin-bottom: -10000em;
+    padding-bottom: 10000em;
+}
+
+/* common_background_color 全局通用背景颜色 */
+.common_background_color {
+    background-color: #f1f3f5;
+}
