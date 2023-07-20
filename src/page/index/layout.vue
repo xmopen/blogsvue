@@ -79,11 +79,6 @@ export default {
     padding-top: 3em;
   }
 
-  .testdiv {
-    border: solid red 1px;
-    height: 90em;
-  }
-
   #middle_div {
     padding-left: 20em;
     margin-left: -2em;

@@ -27,7 +27,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   /*margin-top: 60px;*/
   /*margin-top: -0.9em;*/
   width: 100%;
@@ -40,7 +39,6 @@ export default {
 }
 
 /*美化滚动条*/
-
 ::-webkit-scrollbar {
   width: 0.5em;
   height: 0em;

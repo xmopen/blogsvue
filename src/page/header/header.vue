@@ -122,12 +122,11 @@ a {
   }
 
   .header_div {
+    background-image: url("../../assets/black_boat.png");
     width: 100%;
     /* margin-bottom: 3em; */
     border: pink solid 1px;
     height: 16em;
-    position: -webkit-sticky;
-    position: sticky;
     top: 0px;
     background-color: #21282e;
     z-index: 99999;
