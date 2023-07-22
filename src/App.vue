@@ -23,19 +23,13 @@ export default {
 @import "./css/common.css";
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  /*margin-top: 60px;*/
-  /*margin-top: -0.9em;*/
   width: 100%;
   height: 100%;
-  /* height: 3000px; */
   padding: 0;
   margin: 0;
-  /* 自定义字体. */
-  font-family: "Z Style";
 }
 
 /*美化滚动条*/
@@ -46,12 +40,8 @@ export default {
 
 /*定义滚动条轨道 内阴影+圆角*/
 ::-webkit-scrollbar-track {
-  /*box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);*/
-  /*-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);*/
   border-radius: 10px;
   /*背景颜色滚动条背景颜色*/
-  /*background-color: #f7f7f7;*/
-  /*background-color: #f5f5f5;*/
 }
 
 /*定义滑块 内阴影+圆角*/

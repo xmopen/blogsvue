@@ -1,5 +1,6 @@
 /* 参考: https://getcssscan.com/css-box-shadow-examples?ref=producthunt */
 .common_card_div_pc {
+    overflow: hidden;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 2%;
     background-color: #d9d9d9;
@@ -21,7 +22,22 @@
     background-color: #d9d9d9;
 }
 
-/*去除掉a标签背景色*/
-.common_a_url{
-
+.common_li_non {
+    list-style-type: none;
 }
+
+
+.common_text_hidden{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+}
+
+/*文字在DIV中水平居中以及垂直居中*/
+.common_text_content{
+    text-align: center;
+    line-height: 3.2em;
+    justify-content: center;
+    margin-left: -1px;
+}
+

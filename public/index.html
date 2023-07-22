@@ -2,37 +2,35 @@
 <html lang="">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!--    <meta name="viewport" content="initial-scale=1.0">-->
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <!--    <link rel="icon" href="./favicon.64.ico">-->
-  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-  <title>考拉博客</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>小马Log</title>
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #d9d9d9;
+        }
 
-  <!--      解决宽高.-->
-  <style>
-    body {
-      width: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
-    a {
-      text-decoration: none;
-    }
-  </style>
+        a {
+            text-decoration: none;
+            color: #000000;
+        }
+    </style>
 
 </head>
 
 <body>
-<!--<body style="background-color: #f7f7f7">-->
-  <noscript>
+<noscript>
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
         Please enable it to continue.</strong>
-  </noscript>
-  <div id="app"></div>
-  <!-- built files will be auto injected -->
+</noscript>
+<div id="app"></div>
+<!-- built files will be auto injected -->
 </body>
 
 </html>

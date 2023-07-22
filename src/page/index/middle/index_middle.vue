@@ -3,18 +3,18 @@
     <div v-for="index in data_list" :key="index">
       <!--      分两部分,图片和描述-->
 
-      <div class="middle_card_div">
+      <div class="middle_card_div" v-on:mouseover="mouseover(index)" v-on:mouseout="mouseout(index)">
         <!--右上角标签-->
-        <div>
+        <div style="z-index: 999999">
           <div class="a">
             <div class="b">
-              <span>分类</span>
+              <span>Linux网络</span>
             </div>
           </div>
         </div>
 
-        <div class="index_middle_art_img">
-          <img src="../../../assets/black_boat.png" style="width: 100%;height: 100%" alt="">
+        <div class="index_middle_art_img" v-bind:class="{shadowDropCenter:isSlideFwdCenter[index]}">
+          <img src="../../../assets/back_test.jpg" style="width: 100%;" alt="">
         </div>
 
         <router-link :to="`/article/info.html?` + index">
@@ -27,18 +27,14 @@
                 Linux网络
               </div>
 
-              <!--              热度-->
-              <div class="index_middle_art_desc_hot">
-                99
-              </div>
-
-              <div class="index_middle_art_desc_title">
-                Linux是如何将用户进程的数据包通过中断来配合网卡将数据包发送到目标机器上{{ index }}
-              </div>
-
               <div class="index_middle_art_desc_time">
                 2023-07-21 00:50:51
               </div>
+
+              <div class="index_middle_art_desc_title">
+                Linux是如何将用户进程的数据包通过中断来配合网卡将数据包发送到目标机器上
+              </div>
+
             </div>
           </div>
         </router-link>
@@ -53,12 +49,24 @@ export default {
   data() {
     return {
       data_list: 6,
+      isSlideFwdCenter: [false, false, false, false, false, false],  // 这里应该是一个bool数组.
     }
-  }
+  },
+  methods: {
+    mouseover(index) {
+      this.isSlideFwdCenter[index] = true
+    },
+    mouseout(index) {
+      this.isSlideFwdCenter[index] = false
+    },
+  },
 }
 </script>
 
 <style scoped>
+
+@import "../../../css/animation.css";
+
 @media screen and (max-width: 768px) {
   /*  移动端.*/
 }
@@ -66,20 +74,11 @@ export default {
 @media screen and (min-width: 768px) {
 
   /*  PC*/
-  .card_height {
-  }
   /**/
   .middle_card_div {
     height: 300px;
     margin-bottom: 50px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  }
-
-  .middle_card_div:hover{
-    //-webkit-animation: slide-fwd-center 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-    //animation: slide-fwd-center 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-    //-webkit-animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
-    //animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
   }
 
   .index_middle_art_list {
@@ -89,7 +88,6 @@ export default {
   /*参考: https://blog.csdn.net/qq_39473019/article/details/103634666*/
   .a {
     position: relative;
-  //overflow: hidden; //display: block;
   }
 
   .b {
@@ -99,7 +97,6 @@ export default {
     top: -50px;
     right: -50px;
     transform: rotate(45deg);
-  //overflow: hidden;
   }
 
   .b span {
@@ -115,11 +112,17 @@ export default {
     height: 80%;
   }
 
-  .index_middle_art_img:hover {
+  .index_middle_art_img img {
+    width: 100%;
+    transition: all 0.6s;
+  }
+
+  .index_middle_art_img img:hover {
+    transform: scale(1.1);
   }
 
   .index_middle_art_desc {
-    margin-top: 1em;
+    margin-top: 1.2em;
     margin-left: 1em;
     height: 20%;
     text-align: left;
@@ -128,11 +131,8 @@ export default {
   .index_middle_art_desc_classify {
     display: inline-block;
     float: left;
-  }
-
-  .index_middle_art_desc_hot {
-    display: inline-block;
-    margin-left: 2em;
+    border-radius: 5%;
+    background-color: #ffa39e;
   }
 
   .index_middle_art_desc_title {
@@ -143,6 +143,8 @@ export default {
   .index_middle_art_desc_time {
     display: inline-block;
     margin-left: 2em;
+    border-radius: 5%;
+    background-color: #ffa940;
   }
 }
 </style>

@@ -21,17 +21,21 @@
             <Index_right></Index_right>
           </el-affix> -->
 
-          <el-affix target=".affix_class_test" :offset="300">
-            <Index_right_comment></Index_right_comment>
-          </el-affix>
+<!--          <el-affix target=".affix_class_test" :offset="300">-->
+<!--            <Index_right_comment></Index_right_comment>-->
+<!--          </el-affix>-->
 
-          <el-affix target=".affix_class_test" :offset="600">
-            <Index_right_git_commit></Index_right_git_commit>
-          </el-affix>
+<!--          <el-affix target=".affix_class_test" :offset="400">-->
+<!--            <Index_right_recent_visits></Index_right_recent_visits>-->
+<!--          </el-affix>-->
 
-          <el-affix target=".affix_class_test" :offset="900">
-            <Index_right_recent_visits></Index_right_recent_visits>
+          <el-affix target=".affix_class_test" :offset="200">
+            <Index_right_hot></Index_right_hot>
           </el-affix>
+<!--              首期先不实现,后续实现-->
+<!--          <el-affix target=".affix_class_test" :offset="600">-->
+<!--            <Index_right_git_commit></Index_right_git_commit>-->
+<!--          </el-affix>-->
 
         </div>
       </el-col>
@@ -45,15 +49,13 @@
 
 import Index_middle from "@/page/index/middle/index_middle";
 
-import Index_right_comment from "@/page/index/right/right_comment.vue"
+// import Index_right_git_commit from "@/page/index/right/right_git_commit.vue"
 
-import Index_right_git_commit from "@/page/index/right/right_git_commit.vue"
-
-import Index_right_recent_visits from "@/page/index/right/right_recent_visit.vue"
+import Index_right_hot from "@/page/index/right/right_hot_art.vue"
 
 export default {
   name: "IndexPage",
-  components: { Index_middle, Index_right_comment, Index_right_git_commit, Index_right_recent_visits },
+  components: { Index_middle,Index_right_hot },
 }
 </script>
 
