@@ -182,7 +182,6 @@ export default {
   },
   computed: {},
   mounted() {
-
     Vditor.preview(document.getElementById("vditor-md-content-m"), this.mdContent, {
       anchor: 1,
       hljs: {
