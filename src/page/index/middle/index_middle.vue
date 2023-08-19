@@ -1,38 +1,41 @@
 <template>
   <div class="index_middle_art_list">
-    <div v-for="index in data_list" :key="index">
-      <!--      分两部分,图片和描述-->
+    <div v-for="(item,index) in indexListData" :key="index">
 
+      <!--      分两部分,图片和描述-->
       <div class="middle_card_div" v-on:mouseover="mouseover(index)" v-on:mouseout="mouseout(index)">
         <!--右上角标签-->
         <div style="z-index: 999999">
           <div class="a">
             <div class="b">
-              <span>Linux网络</span>
+              <span>{{item.type}}</span>
             </div>
           </div>
         </div>
 
         <div class="index_middle_art_img" v-bind:class="{shadowDropCenter:isSlideFwdCenter[index]}">
-          <img src="../../../assets/back_test.jpg" style="width: 100%;" alt="">
+          <img :src="item.img" style="width: 100%;" alt="">
         </div>
 
-        <router-link :to="`/article/info.html?` + index">
+        <router-link :to="`/article/info.html?` + item.id">
           <div class="index_middle_art_desc">
             <div>
               <!--            分出几个DIV来进行容纳.-->
+<!--              <div class="index_middle_art_desc_classify">-->
+<!--                &lt;!&ndash;                分类&ndash;&gt;-->
+<!--                {{item.type}}-->
+<!--              </div>-->
 
-              <div class="index_middle_art_desc_classify">
-                <!--                分类-->
-                Linux网络
+              <div class="index_middle_art_desc_author">
+                {{item.author}}
               </div>
 
               <div class="index_middle_art_desc_time">
-                2023-07-21 00:50:51
+                {{item.time}}
               </div>
 
               <div class="index_middle_art_desc_title">
-                Linux是如何将用户进程的数据包通过中断来配合网卡将数据包发送到目标机器上
+               {{item.title}}
               </div>
 
             </div>
@@ -44,12 +47,23 @@
 </template>
 
 <script>
+
+import {IndexList} from "@/api/api"
+
 export default {
   name: "index_middle",
   data() {
     return {
       data_list: 6,
       isSlideFwdCenter: [false, false, false, false, false, false],  // 这里应该是一个bool数组.
+      indexListData: [{
+        "id":"",
+        "title":"",
+        "time":"",
+        "author":"",
+        "img":"",
+        "type":""
+      }],
     }
   },
   methods: {
@@ -60,6 +74,12 @@ export default {
       this.isSlideFwdCenter[index] = false
     },
   },
+  created() {
+    let vueThis = this
+    IndexList().then(function (response) {
+      vueThis.indexListData = response.data
+    })
+  }
 }
 </script>
 
@@ -145,6 +165,13 @@ export default {
     margin-left: 2em;
     border-radius: 5%;
     background-color: #ffa940;
+  }
+
+  .index_middle_art_desc_author{
+    display: inline-block;
+    margin-left: 2em;
+    border-radius: 5%;
+    background-color: pink;
   }
 }
 </style>

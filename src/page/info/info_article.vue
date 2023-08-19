@@ -5,37 +5,37 @@
 
       <el-col :span="2"></el-col>
       <el-col :span="15">
-        <div class="grid-content ep-bg-purple test_div">
+        <div class="grid-content ep-bg-purple ">
           <div class="common_card_div_pc article_info_div">
+
             <b>一文详解Go底层数据结构</b>
             <div class="article_user_info_div">
               <div class="article_user_div">
                 <img class="common_icon_size_pc article_img" src="../../assets/catalog.svg" alt="">
-                <div class="article_info_desc">
+                <div class="article_info_desc article_info_desc_type">
                   Golang 数据结构
                 </div>
               </div>
               <div class="article_user_div">
                 <img class="common_icon_size_pc article_img" src="../../assets/user_id.svg" alt="">
-                <div class="article_info_desc">
+                <div class="article_info_desc article_info_desc_name">
                   zhenxin
                 </div>
               </div>
               <div class="article_user_div">
                 <img class="common_icon_size_pc article_img" src="../../assets/time2.svg" alt="">
-                <div class="article_info_desc">
+                <div class="article_info_desc article_info_desc_time">
                   2023-02-04 20:31:31
                 </div>
               </div>
-              <div class="article_user_div">
-                <img class="common_icon_size_pc article_img" src="../../assets/tongji.svg" alt="">
-                <div class="article_info_desc">
-                  90
-                </div>
+            </div>
+            <div class="div_subhead">
+              <div class="div_subhead_text">
+                工作沟通、干净的需求、自己的想法、工作态度
               </div>
-
             </div>
             <el-divider/>
+
             <!--                      文章主内容-->
             <div id="article_content_div" class="article_content">
              <div  class="info_text">
@@ -99,6 +99,7 @@
 // 引入vditor.
 import Vditor from "vditor";
 import 'vditor/dist/index.css';
+import {ArticleInfo} from "@/api/api"
 
 // 用于文章目录. 
 let childMap = new Map()
@@ -131,115 +132,45 @@ export default {
     return {
       mar: " # 文章测试",
       catalog: [], // 目录.
-      mdContent: `<h1 id="这是标题">一、这是标题</h1><pre><code class="language-go"><span class="code-block"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
-    health := &amp;XiaoMiHealth{
-        User: <span class="hljs-string">&quot;18822038494&quot;</span>,
-        Pass: <span class="hljs-string">&quot;mzx19980803.&quot;</span>,
-    }
-    health.GetXiaoMiCode()
-    // 我是注释.
-    /*我也是注释*/
-}</span>
-</code></pre> 
-
-
-
-<h1 id="这是标题">二、这是标题二</h2><pre><code class="language-go"><span class="code-block"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
-    health := &amp;XiaoMiHealth{
-        User: <span class="hljs-string">&quot;18822038494&quot;</span>,
-        Pass: <span class="hljs-string">&quot;mzx19980803.&quot;</span>,
-    }
-    health.GetXiaoMiCode()
-}</span>
-</code></pre>
-
-<h2 id="这是标题">2.1、这是标题2.1</h2><pre><code class="language-go"><span class="code-block"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
-    health := &amp;XiaoMiHealth{
-        User: <span class="hljs-string">&quot;18822038494&quot;</span>,
-        Pass: <span class="hljs-string">&quot;mzx19980803.&quot;</span>,
-    }
-    health.GetXiaoMiCode()
-}</span>
-
-</code></pre>
-
-
-<h3 id="这是标题">2.1.1、这是标题2.1.1</h3><pre><code class="language-go"><span class="code-block"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
-    health := &amp;XiaoMiHealth{
-        User: <span class="hljs-string">&quot;18822038494&quot;</span>,
-        Pass: <span class="hljs-string">&quot;mzx19980803.&quot;</span>,
-    }
-    health.GetXiaoMiCode()
-}</span>
-
-`,
+      mdContent: "",
       scrollElement: document.documentElement,
       catalogTree: catalogTree,
     }
   },
-  created() {
-
-  },
   computed: {},
   mounted() {
-    Vditor.preview(document.getElementById("vditor-md-content-m"), this.mdContent, {
-      anchor: 1,
-      hljs: {
-        style: "monokai",
-      },
-      markdown: {
-        autoSpace: true,
-        mark: true,
-        paragraphBeginningSpace: true,
-      },
-    })
-
-    // setTimeout(() => {
-    //     // array.
-    //     let rootNodes = document.getElementById("article_content_div").childNodes;
-    //     let nodes = rootNodes[0].childNodes;
-    //     let pre = {}
-    //     nodes.forEach(item => {
-    //         let exists = childMap.has(item.nodeName)
-    //         if (exists) {
-    //             var id = "h" + this.hasCode(item.nodeName)
-    //             item.setAttribute("id", id)
-    //             let value = childMap.get(item.nodeName)
-    //             console.log("value")
-    //             console.log(value)
-    //             // 构造有问题.
-    //             let cataItem = {
-    //                 "id": id,
-    //                 "type": item.nodeName,
-    //                 "name": item.outerText,
-    //                 "diff": item.nodeName.substring(1),
-    //                 "next": [],
-    //             }
-    //             if (value === 1) {
-    //                 this.catalogTree.next.push(cataItem)
-    //             } else {
-    //                 pre.next.push(cataItem)
-    //                 console.log("pre")
-    //                 console.log(pre)
-    //                 console.log(this.catalogTree)
-    //             }
-    //             pre = cataItem
-    //             // this.catalog.push(catalogTree)
-    //         }
-    //     });
-    // }, 600)
+    this.articleInfo()
+    // this.render()
   },
   methods: {
-    hasCode(str) {
-      var hash = 0, i, chr;
-      if (str.length === 0) return hash;
-      for (i = 0; i < str.length; i++) {
-        chr = str.charCodeAt(i);
-        hash = ((hash << 5) - hash) + chr;
-        hash |= 0; // Convert to 32bit integer
-      }
-      return hash;
+    articleInfo(){
+      let url = window.location.href
+      let sourceParam = url.split('?')
+      let vueThis = this
+      let id = sourceParam[1]
+      console.log(id)
+      ArticleInfo(id).then(function (response) {
+        vueThis.mdContent = response.data.content
+      }).then(function () {
+        vueThis.render()
+      })
     },
+    render(){
+      console.log("vditor")
+      console.log(this.mdContent)
+      Vditor.preview(document.getElementById("vditor-md-content-m"), this.mdContent, {
+        anchor: 1,
+        hljs: {
+          style: "monokai",
+        },
+        markdown: {
+          autoSpace: true,
+          mark: true,
+          paragraphBeginningSpace: true,
+        },
+      })
+    },
+
     catalogClick(item) {
       var target = document.getElementById(item)
       let height = this.getElementHeight(target)
@@ -262,36 +193,10 @@ export default {
   },
 }
 </script>
-<style scoped>
+<style>
 
 @import "../../css/common.css";
 
-/*通用CSS*/
-
-pre::after {
-  position: absolute;
-  left: 20px;
-  top: 10px;
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  background-color: #ff5f56;
-  border-radius: 50%;
-  content: '';
-  box-shadow: 25px 0 0 #ffbd2e;
-}
-
-pre::before {
-  position: absolute;
-  left: 70px;
-  top: 10px;
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  background-color: #27c93f;
-  border-radius: 50%;
-  content: '';
-}
 
 /* 移动 */
 @media screen and (max-width: 768px) {
@@ -309,15 +214,12 @@ pre::before {
   }
 
   .article_info_div {
-    /*margin-left: 22em;*/
     width: 98%;
-    /* height: 10em; */
   }
 
   .catalog_info_div {
     width: 22em;
     text-align: justify;
-    /* height: 10em; */
   }
 
   .article_user_info_div {
@@ -334,6 +236,21 @@ pre::before {
     vertical-align: top;
     margin-top: 0.5em;
     margin-left: 0.8em;
+  }
+
+  .article_info_desc_type{
+    border-radius: 5%;
+    background-color: pink;
+  }
+
+  .article_info_desc_name{
+    border-radius: 5%;
+    background-color: #74b9ff;
+  }
+
+  .article_info_desc_time{
+    border-radius: 5%;
+    background-color: #f9ca24;
   }
 
   .article_img {
@@ -378,5 +295,22 @@ pre::before {
     margin-left: 2.5em;
   }
 
+  .div_subhead{
+    text-align: left;
+    height: 3em;
+    margin-top: 1em;
+    border-left: 0.3em solid #20bf6b;
+    background-color: rgba(225, 234, 229, 0.98);
+  }
+
+  .div_subhead_text{
+    margin-left: 0.8em;
+    padding-top: 0.7em;
+  }
+
+  .article_content{
+    margin-top: -2.5em;
+  }
 }
+
 </style>

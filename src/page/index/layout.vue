@@ -41,21 +41,21 @@
       </el-col>
     </el-row>
   </div>
+
+<!--  底部备案信息.-->
+  <ButtomPage></ButtomPage>
+
 </template>
 
 <script>
 
-// import Me from './left/me'
-
 import Index_middle from "@/page/index/middle/index_middle";
-
-// import Index_right_git_commit from "@/page/index/right/right_git_commit.vue"
-
 import Index_right_hot from "@/page/index/right/right_hot_art.vue"
+import ButtomPage from "@/page/buttom/buttom"
 
 export default {
   name: "IndexPage",
-  components: { Index_middle,Index_right_hot },
+  components: { Index_middle,Index_right_hot,ButtomPage },
 }
 </script>
 

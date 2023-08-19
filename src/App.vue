@@ -11,13 +11,12 @@
 <script>
 
 import PageHeader from "@/page/header/header"
-import HTTP from "@/util/httputil";
 
 export default {
   name: 'App',
   components: { PageHeader },
   created() {
-    HTTP("GET","/openxm/api/v1/index/list")
+    console.log("2023-08-19 22:27:00")
   }
 }
 </script>

@@ -3,7 +3,7 @@ import axios from "axios";
 
 // httpInstance http 请求实例.
 const httpInstance = axios.create({
-    baseURL:"http://localhost:8848",
+    baseURL:"http://43.136.18.173:8848",
     timeout:5000,
 })
 
@@ -18,15 +18,9 @@ export default function HTTP(method,url,data)  {
 }
 
 function httpGet(url) {
-    let resp = null
-    httpInstance.get(url).then(function (response) {
-        resp = response
-    })
-    return resp
+    return httpInstance.get(url)
 }
 
 function httpPost(url, data) {
-    httpInstance.post(url,data).then(function (response) {
-        console.log(response)
-    })
+   return  httpInstance.post(url,data)
 }
