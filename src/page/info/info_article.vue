@@ -8,40 +8,40 @@
         <div class="grid-content ep-bg-purple ">
           <div class="common_card_div_pc article_info_div">
 
-            <b>一文详解Go底层数据结构</b>
+            <b>{{title}}</b>
             <div class="article_user_info_div">
               <div class="article_user_div">
                 <img class="common_icon_size_pc article_img" src="../../assets/catalog.svg" alt="">
                 <div class="article_info_desc article_info_desc_type">
-                  Golang 数据结构
+                  {{type}}
                 </div>
               </div>
               <div class="article_user_div">
                 <img class="common_icon_size_pc article_img" src="../../assets/user_id.svg" alt="">
                 <div class="article_info_desc article_info_desc_name">
-                  zhenxin
+                  {{author}}
                 </div>
               </div>
               <div class="article_user_div">
                 <img class="common_icon_size_pc article_img" src="../../assets/time2.svg" alt="">
                 <div class="article_info_desc article_info_desc_time">
-                  2023-02-04 20:31:31
+                  {{time}}
                 </div>
               </div>
             </div>
             <div class="div_subhead">
               <div class="div_subhead_text">
-                工作沟通、干净的需求、自己的想法、工作态度
+               {{subTitle}}
               </div>
             </div>
             <el-divider/>
 
             <!--                      文章主内容-->
             <div id="article_content_div" class="article_content">
-             <div  class="info_text">
-               <div id="vditor-md-content-m">
-               </div>
-             </div>
+              <div class="info_text">
+                <div id="vditor-md-content-m">
+                </div>
+              </div>
             </div>
 
           </div>
@@ -101,40 +101,20 @@ import Vditor from "vditor";
 import 'vditor/dist/index.css';
 import {ArticleInfo} from "@/api/api"
 
-// 用于文章目录. 
-let childMap = new Map()
-childMap.set("H1", 1)
-childMap.set("H2", 2)
-childMap.set("H3", 3)
-childMap.set("H4", 4)
-childMap.set("H5", 5)
-childMap.set("H6", 6)
-
-
-// 目录树. 
-// root:[H1,...].next:[H2...] ...
-let Item = {
-  "id": 0,
-  "type": "H0",
-  "name": "目录",
-  "next": [],
-}
-
-let catalogTree = Item;
-
-
 export default {
-
   name: "info_article",
-  //  MdEditor, MdCataLog
   components: {},
   data() {
     return {
-      mar: " # 文章测试",
       catalog: [], // 目录.
-      mdContent: "",
+      catalogTree: "",
       scrollElement: document.documentElement,
-      catalogTree: catalogTree,
+      mdContent: "",
+      type: "",
+      author: "",
+      time: "",
+      title: "",
+      subTitle: "",
     }
   },
   computed: {},
@@ -143,21 +123,23 @@ export default {
     // this.render()
   },
   methods: {
-    articleInfo(){
+    articleInfo() {
       let url = window.location.href
       let sourceParam = url.split('?')
       let vueThis = this
       let id = sourceParam[1]
-      console.log(id)
       ArticleInfo(id).then(function (response) {
         vueThis.mdContent = response.data.content
+        vueThis.type = response.data.type
+        vueThis.author = response.data.author
+        vueThis.time = response.data.time
+        vueThis.title = response.data.title
+        vueThis.subTitle = response.data.sub_head
       }).then(function () {
         vueThis.render()
       })
     },
-    render(){
-      console.log("vditor")
-      console.log(this.mdContent)
+    render() {
       Vditor.preview(document.getElementById("vditor-md-content-m"), this.mdContent, {
         anchor: 1,
         hljs: {
@@ -197,6 +179,15 @@ export default {
 
 @import "../../css/common.css";
 
+/*修改vditor样式*/
+
+code {
+  max-height: 100% !important;
+}
+
+.article_content p{
+  line-height: 1.8em;
+}
 
 /* 移动 */
 @media screen and (max-width: 768px) {
@@ -238,17 +229,17 @@ export default {
     margin-left: 0.8em;
   }
 
-  .article_info_desc_type{
+  .article_info_desc_type {
     border-radius: 5%;
     background-color: pink;
   }
 
-  .article_info_desc_name{
+  .article_info_desc_name {
     border-radius: 5%;
     background-color: #74b9ff;
   }
 
-  .article_info_desc_time{
+  .article_info_desc_time {
     border-radius: 5%;
     background-color: #f9ca24;
   }
@@ -295,7 +286,7 @@ export default {
     margin-left: 2.5em;
   }
 
-  .div_subhead{
+  .div_subhead {
     text-align: left;
     height: 3em;
     margin-top: 1em;
@@ -303,12 +294,13 @@ export default {
     background-color: rgba(225, 234, 229, 0.98);
   }
 
-  .div_subhead_text{
+  .div_subhead_text {
     margin-left: 0.8em;
     padding-top: 0.7em;
   }
 
-  .article_content{
+  .article_content {
+    height: 100%;
     margin-top: -2.5em;
   }
 }
