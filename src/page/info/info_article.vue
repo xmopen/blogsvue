@@ -189,6 +189,34 @@ code {
   line-height: 1.8em;
 }
 
+/*修改vditorH2下划线样式*/
+.article_content h2{
+  padding-bottom: 0.3em !important;
+  border-bottom: 1px solid #f97f51 !important;
+}
+
+/*blockquote*/
+.article_content blockquote{
+  //color: red !important;
+  background-color: rgba(64, 158, 255, 0.17) !important;
+  border-left: 0.25em solid #409eff !important;
+}
+
+/*修改a链接*/
+.article_content p>a{
+  border-radius: 5% !important;
+  background-color: #fbc531;
+}
+
+/*修改背景图片UI样式
+参考： https://getcssscan.com/css-box-shadow-examples?ref=producthunt
+*/
+.article_content p>img{
+  //border: 0.1em solid red !important;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px !important;
+}
+
+
 /* 移动 */
 @media screen and (max-width: 768px) {
 }
@@ -205,7 +233,7 @@ code {
   }
 
   .article_info_div {
-    width: 98%;
+    padding-right: 1em !important;
   }
 
   .catalog_info_div {
@@ -300,6 +328,7 @@ code {
   }
 
   .article_content {
+    width: 100%;
     height: 100%;
     margin-top: -2.5em;
   }

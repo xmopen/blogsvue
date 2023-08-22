@@ -25,11 +25,11 @@ header:
 其余功能后续陆续上线.
 
 ### 目前Bug.
-- 首页右侧三个窗口往下滑如果窗口高度不够则最下面的无法展示.
-- Header 悬浮提示问题：优化处理. 
 - 文章页面目录无法展示多级问题. 
+- 文章详情页明显有隐藏一部分
 
-### 推荐动画库：
-1. https://animista.net/play/text/focus-in
+### 参考：
+1. 动画库： https://animista.net/play/text/focus-in
+2. 卡片效果：https://getcssscan.com/css-box-shadow-examples?ref=producthunt
 
 vertical-align: top;
