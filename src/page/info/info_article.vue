@@ -5,33 +5,38 @@
 
       <el-col :span="2"></el-col>
       <el-col :span="15">
+
+<!--        文章信息-->
         <div class="grid-content ep-bg-purple ">
           <div class="common_card_div_pc article_info_div">
 
-            <b>{{title}}</b>
+            <div class="article_info_title_div">
+              <b>{{article.title}}</b>
+            </div>
+
             <div class="article_user_info_div">
               <div class="article_user_div">
                 <img class="common_icon_size_pc article_img" src="../../assets/catalog.svg" alt="">
                 <div class="article_info_desc article_info_desc_type">
-                  {{type}}
+                  {{article.type}}
                 </div>
               </div>
               <div class="article_user_div">
                 <img class="common_icon_size_pc article_img" src="../../assets/user_id.svg" alt="">
                 <div class="article_info_desc article_info_desc_name">
-                  {{author}}
+                  {{article.author}}
                 </div>
               </div>
               <div class="article_user_div">
                 <img class="common_icon_size_pc article_img" src="../../assets/time2.svg" alt="">
                 <div class="article_info_desc article_info_desc_time">
-                  {{time}}
+                  {{article.time}}
                 </div>
               </div>
             </div>
             <div class="div_subhead">
               <div class="div_subhead_text">
-               {{subTitle}}
+               {{article.subTitle}}
               </div>
             </div>
             <el-divider/>
@@ -46,6 +51,18 @@
 
           </div>
         </div>
+
+        <div class="article_common_div">
+          <div class="article_common_top_div">
+            <!--              评论-->
+            <el-button type="success" class="article_common_button">
+              <el-icon style="margin-right: 0.3em"><EditPen /></el-icon>
+              回复讨论
+            </el-button>
+          </div>
+        </div>
+
+
       </el-col>
       <el-col :span="7">
         <div class="grid-content ep-bg-purple-light catalog_afafix common_affix_div">
@@ -109,12 +126,14 @@ export default {
       catalog: [], // 目录.
       catalogTree: "",
       scrollElement: document.documentElement,
-      mdContent: "",
-      type: "",
-      author: "",
-      time: "",
-      title: "",
-      subTitle: "",
+      article:{
+        content: "",
+        type: "",
+        author: "",
+        time: "",
+        title: "",
+        subTitle: "",
+      },
     }
   },
   computed: {},
@@ -129,18 +148,18 @@ export default {
       let vueThis = this
       let id = sourceParam[1]
       ArticleInfo(id).then(function (response) {
-        vueThis.mdContent = response.data.content
-        vueThis.type = response.data.type
-        vueThis.author = response.data.author
-        vueThis.time = response.data.time
-        vueThis.title = response.data.title
-        vueThis.subTitle = response.data.sub_head
+        vueThis.article.content = response.data.content
+        vueThis.article.type = response.data.type
+        vueThis.article.author = response.data.author
+        vueThis.article.time = response.data.time
+        vueThis.article.title = response.data.title
+        vueThis.article.subTitle = response.data.sub_head
       }).then(function () {
         vueThis.render()
       })
     },
     render() {
-      Vditor.preview(document.getElementById("vditor-md-content-m"), this.mdContent, {
+      Vditor.preview(document.getElementById("vditor-md-content-m"), this.article.content, {
         anchor: 1,
         hljs: {
           style: "monokai",
@@ -169,7 +188,7 @@ export default {
       do {
         height += node.offsetTop;
         node = node.offsetParent;
-      } while (node != root)
+      } while (node !== root)
       return height;
     },
   },
@@ -233,7 +252,7 @@ code {
   }
 
   .article_info_div {
-    padding-right: 1em !important;
+    padding-right: 1.3em !important;
   }
 
   .catalog_info_div {
@@ -289,7 +308,6 @@ code {
     /* overflow: hidden; */
   }
 
-
   .catalog_detail_div {
     margin-left: 1.6em;
   }
@@ -332,6 +350,31 @@ code {
     height: 100%;
     margin-top: -2.5em;
   }
+
+  .article_info_title_div{
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+    font-size: 1.5em;
+  }
+
+  /*文章评论*/
+  .article_common_top_div{
+    height: 3em;
+    margin-top: 0.5em;
+    background-color: #FFFFFF68;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.08),0 1px 2px rgba(255, 255, 255, 0.1);
+  }
+
+  .article_common_button{
+    margin-top: 0.6em;
+    border-radius: 8px;
+  }
+
+  .article_common_div{
+    margin-bottom: 1em;
+  }
+
 }
 
 </style>
