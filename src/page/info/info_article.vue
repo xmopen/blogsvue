@@ -6,37 +6,37 @@
       <el-col :span="2"></el-col>
       <el-col :span="15">
 
-<!--        文章信息-->
+        <!--        文章信息-->
         <div class="grid-content ep-bg-purple ">
           <div class="common_card_div_pc article_info_div">
 
             <div class="article_info_title_div">
-              <b>{{article.title}}</b>
+              <b>{{ article.title }}</b>
             </div>
 
             <div class="article_user_info_div">
               <div class="article_user_div">
                 <img class="common_icon_size_pc article_img" src="../../assets/catalog.svg" alt="">
                 <div class="article_info_desc article_info_desc_type">
-                  {{article.type}}
+                  {{ article.type }}
                 </div>
               </div>
               <div class="article_user_div">
                 <img class="common_icon_size_pc article_img" src="../../assets/user_id.svg" alt="">
                 <div class="article_info_desc article_info_desc_name">
-                  {{article.author}}
+                  {{ article.author }}
                 </div>
               </div>
               <div class="article_user_div">
                 <img class="common_icon_size_pc article_img" src="../../assets/time2.svg" alt="">
                 <div class="article_info_desc article_info_desc_time">
-                  {{article.time}}
+                  {{ article.time }}
                 </div>
               </div>
             </div>
             <div class="div_subhead">
               <div class="div_subhead_text">
-               {{article.subTitle}}
+                {{ article.subTitle }}
               </div>
             </div>
             <el-divider/>
@@ -53,15 +53,73 @@
         </div>
 
         <div class="article_common_div">
-          <div class="article_common_top_div">
+          <div class="article_common_top_div" @click="clickComment">
             <!--              评论-->
             <el-button type="success" class="article_common_button">
-              <el-icon style="margin-right: 0.3em"><EditPen /></el-icon>
+              <el-icon style="margin-right: 0.3em">
+                <EditPen/>
+              </el-icon>
               回复讨论
             </el-button>
           </div>
         </div>
 
+        <el-drawer
+            :size="500"
+            v-model="comment.buttomDrawer"
+            :show-close="false"
+            direction="btt"
+            :before-close="handleClose"
+        >
+          <!--          template 这里就相当于透传下去了,事件也都透传下去了.-->
+          <template #header="{close,titleId,titleClass}">
+            <div :id="titleId" :class="titleClass">
+              <el-button style="float: left" type="" @click="close">
+                取消
+              </el-button>
+            </div>
+            <el-button type="warning" @click="submitComment">
+              <el-icon style="margin-right: 0.1em;margin-left: -1em">
+                <Position/>
+              </el-icon>
+              回复评论
+            </el-button>
+          </template>
+          <!--comment-->
+          <div class="buttom_comment_div">
+            <div id="buttom_comment_id">
+            </div>
+          </div>
+        </el-drawer>
+
+        <!--        回复列表-->
+        <div class="article_comment_list_div" id="article_comment_list_id">
+          <div class="article_common_top_div article_comment_item_div" v-for="(item,index) in comment.list"
+               :key="index">
+            <!--            img以及昵称-->
+            <div>
+              <div class="article_comment_img_div">
+                <img :src="item.img" alt="" style="width: 32px;height: 32px;border-radius: 8px">
+              </div>
+              <div class="article_comment_name_span">
+                <span>{{ item.name }}</span>
+              </div>
+              <!--              右侧楼层、地区、时间-->
+              <div class="article_comment_right_div">
+                <span class="article_comment_right_span">{{ index + 1 }}&nbsp;楼</span>
+                <span style="margin-left: 0.1em"> > </span>
+                <span class="article_comment_right_span">来自深圳 </span>
+                <span style="margin-left: 0.1em"> > </span>
+                <span class="article_comment_right_span">2023年08月27日</span>
+              </div>
+            </div>
+
+            <!--评论渲染: 这里可能没有HTML没有渲染后面新添加的评论-->
+            <div :id="index" class="article_comment_content_div">
+            </div>
+
+          </div>
+        </div>
 
       </el-col>
       <el-col :span="7">
@@ -116,17 +174,17 @@
 // 引入vditor.
 import Vditor from "vditor";
 import 'vditor/dist/index.css';
+import {ElMessageBox} from "element-plus";
 import {ArticleInfo} from "@/api/api"
 
 export default {
   name: "info_article",
-  components: {},
   data() {
     return {
       catalog: [], // 目录.
       catalogTree: "",
       scrollElement: document.documentElement,
-      article:{
+      article: {
         content: "",
         type: "",
         author: "",
@@ -134,12 +192,63 @@ export default {
         title: "",
         subTitle: "",
       },
+      comment: {
+        buttomDrawer: false,
+        flag: true,
+        vditor: {},
+        list: [
+          {
+            img: "https://typoraimg-1303903194.cos.ap-guangzhou.myqcloud.com/blog3185-2023-05-08044945-1683535785745.jpg",
+            name: "a",
+            content: `\`\`\`go
+// AllPublishedArticles 获取已经发布的所有文章.
+func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
+\titr, err := a.articleCache.LoadOrCreate("all_published_articles", "")
+\tif err != nil {
+\t\treturn nil, err
+\t}
+\tarticleCache := itr.(*articleCacheValue)
+\treturn articleCache.allArticlesCache, nil
+}
+\`\`\``
+          },
+          {
+            img: "https://typoraimg-1303903194.cos.ap-guangzhou.myqcloud.com/blog3185-2023-05-08044945-1683535785745.jpg",
+            name: "b",
+            content: `\`\`\`go
+// AllPublishedArticles 获取已经发布的所有文章.
+func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
+\titr, err := a.articleCache.LoadOrCreate("all_published_articles", "")
+\tif err != nil {
+\t\treturn nil, err
+\t}
+\tarticleCache := itr.(*articleCacheValue)
+\treturn articleCache.allArticlesCache, nil
+}
+\`\`\``
+          },
+          {
+            img: "https://typoraimg-1303903194.cos.ap-guangzhou.myqcloud.com/blog3185-2023-05-08044945-1683535785745.jpg",
+            name: "c",
+            content: `\`\`\`go
+// AllPublishedArticles 获取已经发布的所有文章.
+func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
+\titr, err := a.articleCache.LoadOrCreate("all_published_articles", "")
+\tif err != nil {
+\t\treturn nil, err
+\t}
+\tarticleCache := itr.(*articleCacheValue)
+\treturn articleCache.allArticlesCache, nil
+}
+\`\`\``
+          }
+        ]
+      },
     }
   },
   computed: {},
   mounted() {
     this.articleInfo()
-    // this.render()
   },
   methods: {
     articleInfo() {
@@ -158,6 +267,7 @@ export default {
         vueThis.render()
       })
     },
+    // 渲染文章内容
     render() {
       Vditor.preview(document.getElementById("vditor-md-content-m"), this.article.content, {
         anchor: 1,
@@ -169,6 +279,94 @@ export default {
           mark: true,
           paragraphBeginningSpace: true,
         },
+      })
+      // 渲染评论List.
+      setTimeout(() => {
+        this.renderCommentList()
+      }, 500)
+    },
+
+    renderCommentList() {
+      for (let i = 0; i < this.comment.list.length; i++) {
+        let item = this.comment.list[i]
+        console.log(item)
+        Vditor.preview(document.getElementById(i), item.content, {
+          anchor: 1,
+          hljs: {
+            style: "monokai",
+          },
+          markdown: {
+            autoSpace: true,
+            mark: true,
+            paragraphBeginningSpace: true,
+          },
+        })
+      }
+    },
+
+    // renderComment 渲染评论MD编辑器.
+    renderComment() {
+      this.comment.vditor = new Vditor('buttom_comment_id', {
+        height: 368,
+        toolbar: [
+          "headings", // 标题
+          "bold", // 粗体
+          "italic", // 斜体
+          "|",
+          "list",
+          "ordered-list",
+          "|",
+          "line",
+          "code",
+        ],
+        mode: "sv", // IR即时渲染、SV分屏预览、WYSIWYG所见即所得.
+        preview: {
+          delay: 100,
+        },
+        hljs: {
+          style: "monokai",
+        },
+        toolbarConfig: {
+          pin: true, // 是否固定工具栏.
+        },
+        cache: {
+          enable: false,
+        },
+      })
+    },
+    clickComment() {
+      this.comment.buttomDrawer = true
+      setTimeout(() => {
+        this.renderComment()
+        this.comment.vditor.setValue("", true)
+      }, 300)
+    },
+    handleClose() {
+      ElMessageBox.confirm('您确定要关闭评论吗？', {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        this.comment.buttomDrawer = false
+      })
+    },
+    submitComment() {
+      ElMessageBox.confirm('您确定提交评论吗？', {
+        confirmButtonText: "回复",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        this.comment.list.push({
+          img: "https://typoraimg-1303903194.cos.ap-guangzhou.myqcloud.com/blog3185-2023-05-08044945-1683535785745.jpg",
+          name: "zhenxinma",
+          content: this.comment.vditor.getValue()
+        })
+        this.comment.buttomDrawer = false
+        setTimeout(() => {
+          this.renderCommentList()
+        }, 10)
+      }).catch(() => {
+        // 点击取消执行事件.
       })
     },
 
@@ -204,25 +402,23 @@ code {
   max-height: 100% !important;
 }
 
-.article_content p{
+.article_content p {
   line-height: 1.8em;
 }
 
 /*修改vditorH2下划线样式*/
-.article_content h2{
+.article_content h2 {
   padding-bottom: 0.3em !important;
   border-bottom: 1px solid #f97f51 !important;
 }
 
 /*blockquote*/
-.article_content blockquote{
-  //color: red !important;
-  background-color: rgba(64, 158, 255, 0.17) !important;
-  border-left: 0.25em solid #409eff !important;
+.article_content blockquote {
+//color: red !important; background-color: rgba(64, 158, 255, 0.17) !important; border-left: 0.25em solid #409eff !important;
 }
 
 /*修改a链接*/
-.article_content p>a{
+.article_content p > a {
   border-radius: 5% !important;
   background-color: #fbc531;
 }
@@ -230,9 +426,8 @@ code {
 /*修改背景图片UI样式
 参考： https://getcssscan.com/css-box-shadow-examples?ref=producthunt
 */
-.article_content p>img{
-  //border: 0.1em solid red !important;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px !important;
+.article_content p > img {
+//border: 0.1em solid red !important; box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px !important;
 }
 
 
@@ -351,28 +546,72 @@ code {
     margin-top: -2.5em;
   }
 
-  .article_info_title_div{
+  .article_info_title_div {
     margin-top: 1.5em;
     margin-bottom: 1em;
     font-size: 1.5em;
   }
 
   /*文章评论*/
-  .article_common_top_div{
-    height: 3em;
-    margin-top: 0.5em;
+  .article_common_top_div {
+    margin-top: 0.8em;
     background-color: #FFFFFF68;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.08),0 1px 2px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.08), 0 1px 2px rgba(255, 255, 255, 0.1);
   }
 
-  .article_common_button{
+  .article_common_button {
     margin-top: 0.6em;
+    margin-bottom: 0.6em;
     border-radius: 8px;
   }
 
-  .article_common_div{
+  .article_common_div {
     margin-bottom: 1em;
+  }
+
+  .buttom_comment_div {
+    margin-top: 0.6em;
+    text-align: left;
+    height: 100%;
+  }
+
+  .article_comment_item_div {
+    height: 100%;
+    margin-top: 1em;
+  }
+
+  .article_comment_list_div {
+    text-align: left; /*控制布局居中*/
+  }
+
+  .article_comment_img_div {
+    vertical-align: top;
+    margin-left: 0.8em;
+    margin-top: 0.6em;
+    display: inline-block;
+  }
+
+  .article_comment_name_span {
+    vertical-align: top;
+    margin-left: 0.7em;
+    margin-top: 0.8em;
+    display: inline-block;
+  }
+
+  .article_comment_content_div {
+    padding-right: 1.2em;
+    margin-top: -0.2em;
+  }
+
+  .article_comment_right_div {
+    color: #bfbfbf;
+    float: right;
+    margin-top: 0.6em;
+  }
+
+  .article_comment_right_span {
+    margin-left: 0.2em;
   }
 
 }
