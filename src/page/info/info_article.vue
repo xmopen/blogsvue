@@ -91,7 +91,6 @@
             </div>
           </div>
         </el-drawer>
-
         <!--        回复列表-->
         <div class="article_comment_list_div" id="article_comment_list_id">
           <div class="article_common_top_div article_comment_item_div" v-for="(item,index) in comment.list"
@@ -167,6 +166,8 @@
         </div>
       </el-col>
     </el-row>
+    <UserLogin></UserLogin>
+    <UserRegister></UserRegister>
   </div>
 </template>
 <script>
@@ -176,9 +177,12 @@ import Vditor from "vditor";
 import 'vditor/dist/index.css';
 import {ElMessageBox} from "element-plus";
 import {ArticleInfo} from "@/api/api"
+import UserLogin from "@/page/auth/login.vue"
+import UserRegister from "@/page/auth/register.vue"
 
 export default {
   name: "info_article",
+  components:{UserLogin,UserRegister},
   data() {
     return {
       catalog: [], // 目录.
@@ -335,11 +339,19 @@ func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
       })
     },
     clickComment() {
-      this.comment.buttomDrawer = true
-      setTimeout(() => {
-        this.renderComment()
-        this.comment.vditor.setValue("", true)
-      }, 300)
+      if (this.$store.state.auth.xmToken === "") {
+        this.openUserLoginDialog()
+      } else {
+        this.comment.buttomDrawer = true
+        setTimeout(() => {
+          this.renderComment()
+          this.comment.vditor.setValue("", true)
+        }, 300)
+      }
+    },
+    openUserLoginDialog(){
+      this.$store.commit(this.$store.state.staticVariable.mutationsName.updateLoginStatus,
+          this.$store.state.staticVariable.login.openLoginDialog)
     },
     handleClose() {
       ElMessageBox.confirm('您确定要关闭评论吗？', {

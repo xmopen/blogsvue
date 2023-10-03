@@ -7,6 +7,7 @@ const index = () => import("@/page/index/layout")
 const route = () => import("@/page/root/root")
 const articleInfo = () => import("@/page/info/info_article")
 const archive = () => import("@/page/archived/archived.vue")
+const login =() => import("@/page/auth/login.vue")
 
 const routes = [
     {path: "/", redirect: "/index.html"},
@@ -29,6 +30,11 @@ const routes = [
         path: "/archived.html",
         name: "archived",
         component: archive,
+    },
+    {
+        path: "/auth.html",
+        name: "login",
+        component:login,
     },
 ]
 

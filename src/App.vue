@@ -11,12 +11,36 @@
 <script>
 
 import PageHeader from "@/page/header/header"
+import {CheckSession} from "@/api/auth_api";
 
 export default {
   name: 'App',
-  components: { PageHeader },
+  components: {PageHeader},
+  methods: {
+    initXMUserFromLocalStorage() {
+      let thisVue = this
+      let xmToken=localStorage.getItem("openxm_token")
+      CheckSession(xmToken).then(function (response) {
+        if (response.code === 0){
+          thisVue.updateStoreAuthInfo(response.data)
+        } else{
+          localStorage.removeItem("openxm_token")
+        }
+      })
+    },
+    updateStoreAuthInfo(checkSessionResponse){
+      this.$store.commit(this.$store.state.staticVariable.mutationsName.updateAuthInfo, {
+        account: checkSessionResponse.user_info.user_account,
+        name: checkSessionResponse.user_info.user_name,
+        xmToken: checkSessionResponse.xm_token,
+        icon:checkSessionResponse.user_icon,
+      })
+    },
+  },
   created() {
     console.log("2023-08-19 22:27:00")
+    // 这里应该初始化auth info. 从cookie.
+    this.initXMUserFromLocalStorage()
   }
 }
 </script>
