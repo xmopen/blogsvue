@@ -98,16 +98,16 @@
             <!--            img以及昵称-->
             <div>
               <div class="article_comment_img_div">
-                <img :src="item.img" alt="" style="width: 32px;height: 32px;border-radius: 8px">
+                <img :src="item.icon" alt="" style="width: 32px;height: 32px;border-radius: 8px">
               </div>
               <div class="article_comment_name_span">
-                <span>{{ item.name }}</span>
+                <span>{{ item.username }}</span>
               </div>
               <!--              右侧楼层、地区、时间-->
               <div class="article_comment_right_div">
                 <span class="article_comment_right_span">{{ index + 1 }}&nbsp;楼</span>
                 <span style="margin-left: 0.1em"> > </span>
-                <span class="article_comment_right_span">来自深圳 </span>
+                <span class="article_comment_right_span">来自{{item.city}} </span>
                 <span style="margin-left: 0.1em"> > </span>
                 <span class="article_comment_right_span">2023年08月27日</span>
               </div>
@@ -175,10 +175,13 @@
 // 引入vditor.
 import Vditor from "vditor";
 import 'vditor/dist/index.css';
-import {ElMessageBox} from "element-plus";
-import {ArticleInfo} from "@/api/api"
+import {ElMessageBox, ElNotification} from "element-plus";
 import UserLogin from "@/page/auth/login.vue"
 import UserRegister from "@/page/auth/register.vue"
+
+import {ArticleInfo} from "@/api/api"
+import {ArticleCommentList} from "@/api/api";
+import {Comment} from "@/api/api"
 
 export default {
   name: "info_article",
@@ -202,8 +205,9 @@ export default {
         vditor: {},
         list: [
           {
-            img: "https://typoraimg-1303903194.cos.ap-guangzhou.myqcloud.com/blog3185-2023-05-08044945-1683535785745.jpg",
-            name: "a",
+            icon: "https://typoraimg-1303903194.cos.ap-guangzhou.myqcloud.com/blog3185-2023-05-08044945-1683535785745.jpg",
+            username: "a",
+            city:"",
             content: `\`\`\`go
 // AllPublishedArticles 获取已经发布的所有文章.
 func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
@@ -216,36 +220,6 @@ func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
 }
 \`\`\``
           },
-          {
-            img: "https://typoraimg-1303903194.cos.ap-guangzhou.myqcloud.com/blog3185-2023-05-08044945-1683535785745.jpg",
-            name: "b",
-            content: `\`\`\`go
-// AllPublishedArticles 获取已经发布的所有文章.
-func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
-\titr, err := a.articleCache.LoadOrCreate("all_published_articles", "")
-\tif err != nil {
-\t\treturn nil, err
-\t}
-\tarticleCache := itr.(*articleCacheValue)
-\treturn articleCache.allArticlesCache, nil
-}
-\`\`\``
-          },
-          {
-            img: "https://typoraimg-1303903194.cos.ap-guangzhou.myqcloud.com/blog3185-2023-05-08044945-1683535785745.jpg",
-            name: "c",
-            content: `\`\`\`go
-// AllPublishedArticles 获取已经发布的所有文章.
-func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
-\titr, err := a.articleCache.LoadOrCreate("all_published_articles", "")
-\tif err != nil {
-\t\treturn nil, err
-\t}
-\tarticleCache := itr.(*articleCacheValue)
-\treturn articleCache.allArticlesCache, nil
-}
-\`\`\``
-          }
         ]
       },
     }
@@ -253,13 +227,17 @@ func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
   computed: {},
   mounted() {
     this.articleInfo()
+    this.getCommentList()
   },
   methods: {
-    articleInfo() {
+    getArticleID(){
       let url = window.location.href
       let sourceParam = url.split('?')
+      return  sourceParam[1]
+    },
+    articleInfo() {
       let vueThis = this
-      let id = sourceParam[1]
+      let id = this.getArticleID()
       ArticleInfo(id).then(function (response) {
         vueThis.article.content = response.data.content
         vueThis.article.type = response.data.type
@@ -271,6 +249,22 @@ func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
         vueThis.render()
       })
     },
+
+    getCommentList(){
+      let thisVue = this
+      ArticleCommentList(this.getArticleID()).then(function (response) {
+        if (response.code === 0){
+          thisVue.comment.list = response.data
+        }else{
+          ElNotification({
+            title: "拉取评论失败",
+            message: "拉取评论失败，请稍后重试",
+            type: 'error',
+          })
+        }
+      })
+    },
+
     // 渲染文章内容
     render() {
       Vditor.preview(document.getElementById("vditor-md-content-m"), this.article.content, {
@@ -293,7 +287,6 @@ func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
     renderCommentList() {
       for (let i = 0; i < this.comment.list.length; i++) {
         let item = this.comment.list[i]
-        console.log(item)
         Vditor.preview(document.getElementById(i), item.content, {
           anchor: 1,
           hljs: {
@@ -363,15 +356,27 @@ func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
       })
     },
     submitComment() {
+      let thisVue = this
       ElMessageBox.confirm('您确定提交评论吗？', {
         confirmButtonText: "回复",
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.comment.list.push({
-          img: "https://typoraimg-1303903194.cos.ap-guangzhou.myqcloud.com/blog3185-2023-05-08044945-1683535785745.jpg",
-          name: "zhenxinma",
-          content: this.comment.vditor.getValue()
+        let commentData = {
+          xm_token: this.$store.state.auth.xmToken,
+          article_id: parseInt(thisVue.getArticleID()),
+          content: thisVue.comment.vditor.getHTML(),
+        }
+        Comment(commentData).then(function (response) {
+          if (response.code === 0){
+            thisVue.getCommentList()
+          }else{
+            ElNotification({
+              title: "评论失败",
+              message: "评论失败，请稍后重试",
+              type: 'error',
+            })
+          }
         })
         this.comment.buttomDrawer = false
         setTimeout(() => {
