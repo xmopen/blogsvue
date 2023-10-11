@@ -8,8 +8,8 @@ const httpInstance = axios.create({
 
 // IndexList get index list.
 // This method return Null to indicate that the HTTP Status is not a success.
-export function IndexList() {
-    return httpInstance.get("/openxm/api/v1/index/list?limit=6&type=0").then(function (response) {
+export function IndexList(offset,limit) {
+    return httpInstance.get("/openxm/api/v1/index/list?type=0&limit="+limit+"&offset="+offset).then(function (response) {
         return response.data
     })
 }

@@ -105,11 +105,11 @@
               </div>
               <!--              右侧楼层、地区、时间-->
               <div class="article_comment_right_div">
-                <span class="article_comment_right_span">{{ index + 1 }}&nbsp;楼</span>
+                <span class="article_comment_right_span">{{item.commentLevel}}&nbsp;楼</span>
                 <span style="margin-left: 0.1em"> > </span>
                 <span class="article_comment_right_span">来自{{item.city}} </span>
                 <span style="margin-left: 0.1em"> > </span>
-                <span class="article_comment_right_span">2023年08月27日</span>
+                <span class="article_comment_right_span">{{item.comment_time}}</span>
               </div>
             </div>
 
@@ -175,7 +175,7 @@
 // 引入vditor.
 import Vditor from "vditor";
 import 'vditor/dist/index.css';
-import {ElMessageBox, ElNotification} from "element-plus";
+import {ElMessageBox, ElNotification,ElMessage} from "element-plus";
 import UserLogin from "@/page/auth/login.vue"
 import UserRegister from "@/page/auth/register.vue"
 
@@ -208,17 +208,8 @@ export default {
             icon: "https://typoraimg-1303903194.cos.ap-guangzhou.myqcloud.com/blog3185-2023-05-08044945-1683535785745.jpg",
             username: "a",
             city:"",
-            content: `\`\`\`go
-// AllPublishedArticles 获取已经发布的所有文章.
-func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
-\titr, err := a.articleCache.LoadOrCreate("all_published_articles", "")
-\tif err != nil {
-\t\treturn nil, err
-\t}
-\tarticleCache := itr.(*articleCacheValue)
-\treturn articleCache.allArticlesCache, nil
-}
-\`\`\``
+            content:"",
+            comment_time:"",
           },
         ]
       },
@@ -237,8 +228,7 @@ func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
     },
     articleInfo() {
       let vueThis = this
-      let id = this.getArticleID()
-      ArticleInfo(id).then(function (response) {
+      ArticleInfo(this.getArticleID()).then(function (response) {
         vueThis.article.content = response.data.content
         vueThis.article.type = response.data.type
         vueThis.article.author = response.data.author
@@ -255,6 +245,11 @@ func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
       ArticleCommentList(this.getArticleID()).then(function (response) {
         if (response.code === 0){
           thisVue.comment.list = response.data
+          // 修正N楼层.
+          let length = thisVue.comment.list.length
+          for (let i = 0; i < length; i++) {
+            thisVue.comment.list[i].commentLevel = length - i
+          }
         }else{
           ElNotification({
             title: "拉取评论失败",
@@ -331,6 +326,7 @@ func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
         },
       })
     },
+    // 打开评论
     clickComment() {
       if (this.$store.state.auth.xmToken === "") {
         this.openUserLoginDialog()
@@ -355,6 +351,7 @@ func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
         this.comment.buttomDrawer = false
       })
     },
+    // 评论
     submitComment() {
       let thisVue = this
       ElMessageBox.confirm('您确定提交评论吗？', {
@@ -369,13 +366,12 @@ func (a *ArticleManager) AllPublishedArticles() ([]*articlemod.Article, error) {
         }
         Comment(commentData).then(function (response) {
           if (response.code === 0){
+            ElMessage.success('评论成功')
             thisVue.getCommentList()
+            thisVue.comment.vditor.setValue("", true)
+            thisVue.comment.vditor = null
           }else{
-            ElNotification({
-              title: "评论失败",
-              message: "评论失败，请稍后重试",
-              type: 'error',
-            })
+            ElMessage.error('评论失败，请稍后重试！')
           }
         })
         this.comment.buttomDrawer = false
@@ -447,6 +443,27 @@ code {
 //border: 0.1em solid red !important; box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px !important;
 }
 
+.infinite-list-wrapper {
+  height: 300px;
+  text-align: center;
+}
+.infinite-list-wrapper .list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.infinite-list-wrapper .list-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  background: var(--el-color-danger-light-9);
+  color: var(--el-color-danger);
+}
+.infinite-list-wrapper .list-item + .list-item {
+  margin-top: 10px;
+}
 
 /* 移动 */
 @media screen and (max-width: 768px) {
@@ -618,7 +635,8 @@ code {
 
   .article_comment_content_div {
     padding-right: 1.2em;
-    margin-top: -0.2em;
+    margin-top: -0.1em;
+    margin-left: 2.1em;
   }
 
   .article_comment_right_div {

@@ -17,32 +17,20 @@
       <!-- 需要添加置顶. -->
       <el-col :span="6" class="right_div height_style">
         <div class="grid-content ep-bg-purple  affix_class_test affix_div">
-          <!-- <el-affix target=".affix_class_test" :offset="300">
-            <Index_right></Index_right>
-          </el-affix> -->
-
-<!--          <el-affix target=".affix_class_test" :offset="300">-->
-<!--            <Index_right_comment></Index_right_comment>-->
-<!--          </el-affix>-->
-
-<!--          <el-affix target=".affix_class_test" :offset="400">-->
-<!--            <Index_right_recent_visits></Index_right_recent_visits>-->
-<!--          </el-affix>-->
-
           <el-affix target=".affix_class_test" :offset="200">
             <Index_right_hot></Index_right_hot>
           </el-affix>
-<!--              首期先不实现,后续实现-->
-<!--          <el-affix target=".affix_class_test" :offset="600">-->
-<!--            <Index_right_git_commit></Index_right_git_commit>-->
-<!--          </el-affix>-->
+          <!--              首期先不实现,后续实现-->
+          <!--          <el-affix target=".affix_class_test" :offset="1200">-->
+          <!--            <IndexRightInternetProvider></IndexRightInternetProvider>-->
+          <!--          </el-affix>-->
 
         </div>
       </el-col>
     </el-row>
   </div>
 
-<!--  底部备案信息.-->
+  <!--  底部备案信息.-->
   <ButtomPage></ButtomPage>
 
 </template>
@@ -55,7 +43,7 @@ import ButtomPage from "@/page/buttom/buttom"
 
 export default {
   name: "IndexPage",
-  components: { Index_middle,Index_right_hot,ButtomPage },
+  components: {Index_middle, Index_right_hot, ButtomPage},
 }
 </script>
 
@@ -66,7 +54,8 @@ export default {
     display: none;
   }
 
-  .layout_div {}
+  .layout_div {
+  }
 }
 
 @media screen and (min-width: 768px) {

@@ -1,84 +1,90 @@
 <template>
   <div class="index_middle_art_list">
-    <div v-for="(item,index) in indexListData" :key="index">
 
-      <!--      分两部分,图片和描述-->
-      <div class="middle_card_div" v-on:mouseover="mouseover(index)" v-on:mouseout="mouseout(index)">
-        <!--右上角标签-->
-        <div style="z-index: 999999">
-          <div class="a">
-            <div class="b">
-              <span>{{item.type}}</span>
+    <div v-infinite-scroll="loadArticleList">
+      <div class="infinite-list-item" v-for="(item,index) in indexListData" :key="index">
+        <!--      分两部分,图片和描述-->
+        <div class="middle_card_div" v-on:mouseover="mouseover(index)" v-on:mouseout="mouseout(index)">
+          <!--右上角标签-->
+          <div style="z-index: 999999">
+            <div class="a">
+              <div class="b">
+                <span>{{ item.type }}</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="index_middle_art_img" v-bind:class="{shadowDropCenter:isSlideFwdCenter[index]}">
-          <img :src="item.img" style="width: 100%;" alt="">
-        </div>
-
-        <router-link :to="`/article/info.html?` + item.id">
-          <div class="index_middle_art_desc">
-            <div>
-              <!--            分出几个DIV来进行容纳.-->
-<!--              <div class="index_middle_art_desc_classify">-->
-<!--                &lt;!&ndash;                分类&ndash;&gt;-->
-<!--                {{item.type}}-->
-<!--              </div>-->
-
-              <div class="index_middle_art_desc_author">
-                {{item.author}}
-              </div>
-
-              <div class="index_middle_art_desc_time">
-                {{item.time}}
-              </div>
-
-              <div class="index_middle_art_desc_title">
-               {{item.title}}
-              </div>
-
-            </div>
+          <div class="index_middle_art_img" v-bind:class="{shadowDropCenter:isSlideFwdCenter[index]}">
+            <img :src="item.img" style="width: 100%;" alt="">
           </div>
-        </router-link>
+
+          <router-link :to="`/article/info.html?` + item.id">
+            <div class="index_middle_art_desc">
+              <div>
+                <div class="index_middle_art_desc_author">
+                  {{ item.author }}
+                </div>
+
+                <div class="index_middle_art_desc_time">
+                  {{ item.time }}
+                </div>
+
+                <div class="index_middle_art_desc_title">
+                  {{ item.title }}
+                </div>
+
+              </div>
+            </div>
+          </router-link>
+        </div>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
 
 import {IndexList} from "@/api/api"
+import {ElMessage} from "element-plus";
 
 export default {
   name: "index_middle",
   data() {
     return {
-      data_list: 6,
       isSlideFwdCenter: [false, false, false, false, false, false],  // 这里应该是一个bool数组.
-      indexListData: [{
-        "id":"",
-        "title":"",
-        "time":"",
-        "author":"",
-        "img":"",
-        "type":""
-      }],
+      indexListData: [],
+      offset: 0,
+      limit: 4,
     }
   },
   methods: {
+    loadArticleList() {
+      this.getIndexArticleList(this.offset, this.limit)
+      this.offset += this.limit
+    },
     mouseover(index) {
       this.isSlideFwdCenter[index] = true
     },
     mouseout(index) {
       this.isSlideFwdCenter[index] = false
     },
+    getIndexArticleList(offset, limit) {
+      let vueThis = this
+      IndexList(offset, limit).then(function (response) {
+        if (response.code === 0) {
+          for (let i = 0; i < response.data.length; i++) {
+            vueThis.indexListData.push(response.data[i])
+          }
+        } else {
+          ElMessage.error("获取文章出错,请稍后重试！")
+        }
+      })
+    },
   },
   created() {
-    let vueThis = this
-    IndexList().then(function (response) {
-      vueThis.indexListData = response.data
-    })
+    this.getIndexArticleList(this.offset, 6)
+    this.offset += 6
   }
 }
 </script>
@@ -86,6 +92,7 @@ export default {
 <style scoped>
 
 @import "../../../css/animation.css";
+
 
 @media screen and (max-width: 768px) {
   /*  移动端.*/
@@ -167,7 +174,7 @@ export default {
     background-color: #ffa940;
   }
 
-  .index_middle_art_desc_author{
+  .index_middle_art_desc_author {
     display: inline-block;
     margin-left: 2em;
     border-radius: 5%;
