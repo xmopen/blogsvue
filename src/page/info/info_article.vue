@@ -10,12 +10,13 @@
         <div class="grid-content ep-bg-purple ">
           <div class="common_card_div_pc article_info_div">
 
-            <div class="article_info_title_div">
+            <div class="article_info_title_div tracking-in-contract">
               <b>{{ article.title }}</b>
             </div>
 
+
             <div class="article_user_info_div">
-              <div class="article_user_div">
+              <div class="article_user_div slide-in-left">
                 <img class="common_icon_size_pc article_img" src="../../assets/catalog.svg" alt="">
                 <div class="article_info_desc article_info_desc_type">
                   {{ article.type }}
@@ -27,7 +28,7 @@
                   {{ article.author }}
                 </div>
               </div>
-              <div class="article_user_div">
+              <div class="article_user_div slide-in-right">
                 <img class="common_icon_size_pc article_img" src="../../assets/time2.svg" alt="">
                 <div class="article_info_desc article_info_desc_time">
                   {{ article.time }}
@@ -39,7 +40,7 @@
                 {{ article.subTitle }}
               </div>
             </div>
-            <el-divider/>
+            <el-divider style="margin-bottom: 3em"/>
 
             <!--                      文章主内容-->
             <div id="article_content_div" class="article_content">
@@ -408,6 +409,7 @@ export default {
 <style>
 
 @import "../../css/common.css";
+@import "../../css/animation.css";
 
 /*修改vditor样式*/
 
@@ -589,8 +591,8 @@ code {
   /*文章评论*/
   .article_common_top_div {
     margin-top: 0.8em;
-    background-color: #FFFFFF68;
     border-radius: 8px;
+    background-color: #FFFFFF68;
     box-shadow: 0 2px 8px rgba(255, 255, 255, 0.08), 0 1px 2px rgba(255, 255, 255, 0.1);
   }
 
@@ -612,11 +614,12 @@ code {
 
   .article_comment_item_div {
     height: 100%;
-    margin-top: 1em;
+    margin-top: 1.6em;
   }
 
   .article_comment_list_div {
     text-align: left; /*控制布局居中*/
+    margin-bottom: 2em;
   }
 
   .article_comment_img_div {

@@ -2,7 +2,8 @@ import axios from "axios";
 
 // httpInstance http 请求实例.
 const httpInstance = axios.create({
-    baseURL: "http://127.0.0.1:8848",
+    baseURL: "http://openxm.cn",
+    // baseURL: "http://127.0.0.1:8848",
     timeout: 5000,
 })
 
@@ -14,14 +15,14 @@ export function IndexList(offset,limit) {
     })
 }
 
-// ArticleInfo return article info by article id.
+// ArticleInfo return artilce info by artilce id.
 export function ArticleInfo(id) {
     return httpInstance.get("/openxm/api/v1/article/info?id=" + id).then(function (response) {
         return response.data
     })
 }
 
-// Comment comment for article
+// Comment comment for artilce
 export function Comment(commentData) {
     return httpInstance.post("/openxm/api/v1/comment/do",commentData).then(function (response) {
         return response.data
@@ -36,3 +37,9 @@ export function ArticleCommentList(articleID) {
 }
 
 
+// GetHotArticleList return host artilce list
+export function GetHotArticleList() {
+    return httpInstance.get("/openxm/api/v1/article/hot?limit=4").then(function (response) {
+        return response.data
+    })
+}

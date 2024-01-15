@@ -15,21 +15,21 @@
           </div>
 
           <div class="index_middle_art_img" v-bind:class="{shadowDropCenter:isSlideFwdCenter[index]}">
-            <img :src="item.img" style="width: 100%;" alt="">
+            <img class="kenburns-left" :src="item.img" style="width: 100%;" alt="">
           </div>
 
           <router-link :to="`/article/info.html?` + item.id">
             <div class="index_middle_art_desc">
               <div>
-                <div class="index_middle_art_desc_author">
+                <div class="index_middle_art_desc_author bounce-in-left">
                   {{ item.author }}
                 </div>
 
-                <div class="index_middle_art_desc_time">
+                <div class="index_middle_art_desc_time bounce-in-left">
                   {{ item.time }}
                 </div>
 
-                <div class="index_middle_art_desc_title">
+                <div class="index_middle_art_desc_title tracking-in-contract">
                   {{ item.title }}
                 </div>
 
@@ -55,7 +55,7 @@ export default {
       isSlideFwdCenter: [false, false, false, false, false, false],  // 这里应该是一个bool数组.
       indexListData: [],
       offset: 0,
-      limit: 4,
+      limit: 2,
     }
   },
   methods: {
@@ -83,8 +83,8 @@ export default {
     },
   },
   created() {
-    this.getIndexArticleList(this.offset, 6)
-    this.offset += 6
+    this.getIndexArticleList(this.offset, 3)
+    this.offset += 3
   }
 }
 </script>
@@ -170,15 +170,17 @@ export default {
   .index_middle_art_desc_time {
     display: inline-block;
     margin-left: 2em;
-    border-radius: 5%;
+    border-radius: 3px;
     background-color: #ffa940;
+    padding: 0.2em 0.5em;
   }
 
   .index_middle_art_desc_author {
     display: inline-block;
     margin-left: 2em;
-    border-radius: 5%;
+    border-radius: 4px;
     background-color: pink;
+    padding: 0.2em 0.5em;
   }
 }
 </style>
