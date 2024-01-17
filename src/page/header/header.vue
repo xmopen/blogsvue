@@ -29,15 +29,6 @@
                 </router-link>
               </li>
 
-<!--              <li class="header_li header_li_hover"-->
-<!--                  v-on:mouseover="mouseover(2)"-->
-<!--                  v-on:mouseout="mouseout"-->
-<!--                  v-bind:class="{nowClickLiCss:css_controller.li === 2 || css_controller.hover === 2}"-->
-<!--                  @click="headerLiClick(2)">-->
-<!--                <router-link to="/test.html">-->
-<!--                  <div class="header_li_div">在线聊天</div>-->
-<!--                </router-link>-->
-<!--              </li>-->
 
             </ul>
 
@@ -45,15 +36,7 @@
         </el-col>
       </el-row>
     </div>
-    <!--先屏蔽掉-->
-    <!--    <div class="div_text_desc">-->
-    <!--      并不只是会写代码的程序员-->
-    <!--      <div class="div_text_sub_desc">-->
-    <!--        互联网打工人的窝-->
-    <!--      </div>-->
-    <!--    </div>-->
 
-    <!--    Header 导航.-->
   </div>
 </template>
 
@@ -107,7 +90,8 @@ export default {
 @media screen and (min-width: 768px) {
 
   .header_div {
-    background-image: url("../../assets/black_boat.png");
+    background-image: url("https://blogs-1303903194.cos.ap-beijing.myqcloud.com/blogs/1705506261black_boat_mini.png");
+    //background-image: url("../../assets/black_boat.png");
     width: 100%;
     height: 16em;
     top: 0;
