@@ -55,13 +55,13 @@ export default {
       isSlideFwdCenter: [false, false, false, false, false, false],  // 这里应该是一个bool数组.
       indexListData: [],
       offset: 0,
-      limit: 2,
+      limit: 4,
     }
   },
   methods: {
     loadArticleList() {
-      this.getIndexArticleList(this.offset, this.limit)
-      this.offset += this.limit
+        this.getIndexArticleList(this.offset, this.limit)
+        this.offset += this.limit
     },
     mouseover(index) {
       this.isSlideFwdCenter[index] = true
@@ -83,8 +83,8 @@ export default {
     },
   },
   created() {
-    this.getIndexArticleList(this.offset, 3)
-    this.offset += 3
+    // this.getIndexArticleList(this.offset, 3)
+    // this.offset += 3
   }
 }
 </script>
