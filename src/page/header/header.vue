@@ -5,8 +5,8 @@
       <el-row>
 
         <el-col :span="4"></el-col>
-        <el-col :span="20">
-          <div>
+        <el-col :span="10">
+          <div class="div_border_test">
             <ul class="header_ul">
 
               <li class="header_li header_li_hover"
@@ -28,21 +28,29 @@
                   <div class="header_li_div">归档</div>
                 </router-link>
               </li>
-
-<!--              <li class="header_li header_li_hover"-->
-<!--                  v-on:mouseover="mouseover(2)"-->
-<!--                  v-on:mouseout="mouseout"-->
-<!--                  v-bind:class="{nowClickLiCss:css_controller.li === 2 || css_controller.hover === 2}"-->
-<!--                  @click="headerLiClick(2)">-->
-<!--                <router-link to="/talk.html">-->
-<!--                  <div class="header_li_div">闲话</div>-->
-<!--                </router-link>-->
-<!--              </li>-->
-
-
             </ul>
 
           </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="div_border_test" v-if="userIsLogin">
+            <div class="user_img_div">
+              <router-link to="/auth/v2.html">
+                <el-avatar
+                    src="https://blogs-1303903194.cos.ap-beijing.myqcloud.com/blogs/1719414530微信图片_20240626230830.jpg"
+                />
+              </router-link>
+            </div>
+          </div>
+          <div class="div_border_test" v-if="!userIsLogin">
+            <router-link to="/auth/v2.html">
+              <div class="user_img_div">
+                <el-avatar :icon="UserFilled"/>
+              </div>
+            </router-link>
+          </div>
+        </el-col>
+        <el-col :span="6">
         </el-col>
       </el-row>
     </div>
@@ -53,6 +61,7 @@
 <script>
 
 require('@/assets/index.logo.64.png')
+import {UserFilled} from '@element-plus/icons-vue'
 
 export default {
   name: "PageHeader",
@@ -74,6 +83,14 @@ export default {
     mouseout() {
       this.css_controller.hover = this.css_controller.li
     },
+  },
+  computed: {
+    UserFilled() {
+      return UserFilled
+    },
+    userIsLogin() {
+      return this.$store.state.auth.xmToken !== ""
+    }
   },
   mounted() {
 
@@ -99,14 +116,12 @@ export default {
 /*PC CSS样式*/
 @media screen and (min-width: 768px) {
 
+  .div_border_test {
+    border: 1px red solid;
+  }
+
   .header_div {
-    background-image: url("https://blogs-1303903194.cos.ap-beijing.myqcloud.com/blogs/1705506261black_boat_mini.png");
-    //background-image: url("../../assets/black_boat.png");
-    width: 100%;
-    height: 16em;
-    top: 0;
-    background-color: #21282e;
-    z-index: 99999;
+  //background-image: url("https://blogs-1303903194.cos.ap-beijing.myqcloud.com/blogs/1719415393贝壳-4k.jpg"); //background-image: url("https://blogs-1303903194.cos.ap-beijing.myqcloud.com/blogs/1705506261black_boat_mini.png"); //background-image: url("../../assets/black_boat.png"); width: 100%; top: 0; background-color: #f7f7f7; z-index: 99999;
     /*水平居中*/
     text-align: center;
     line-height: 3.2em;
@@ -143,6 +158,10 @@ export default {
 
   .nowClickLiCss {
     border-bottom: #fd79a8 solid 0.15em;
+  }
+
+  .user_img_div {
+    margin-top: 0.4em;
   }
 
 }

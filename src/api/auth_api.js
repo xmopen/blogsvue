@@ -26,3 +26,10 @@ export function CheckSession(token) {
         return response.data
     })
 }
+
+// SendGenerateMailCode 生成验证码。
+export function SendGenerateMailCode(data){
+    return httpInstance.post("/openxm/api/v1/mail/generate/code",data).then(function (response) {
+        return response.data
+    })
+}

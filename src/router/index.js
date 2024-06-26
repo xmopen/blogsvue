@@ -9,6 +9,7 @@ const articleInfo = () => import("@/page/info/info_article")
 const archive = () => import("@/page/archived/archived.vue")
 const login =() => import("@/page/auth/login.vue")
 const talk = ()=> import("@/page/talk/talk.vue")
+const userLoginOrRegister = () => import("@/page/user/login.vue")
 
 const routes = [
     {path: "/", redirect: "/index.html"},
@@ -41,6 +42,11 @@ const routes = [
         path: "/talk.html",
         name :"talk",
         component: talk,
+    },
+    {
+        path: "/auth/v2.html",
+        name: "userLoginOrRegister",
+        component:userLoginOrRegister,
     }
 ]
 
