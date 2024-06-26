@@ -3,8 +3,8 @@
     <!-- 文章详情页面应该只显示和文章相关的内容(内容+目录),其他一律不显示 -->
     <el-row>
 
-      <el-col :span="2"></el-col>
-      <el-col :span="15">
+      <el-col :span="6"></el-col>
+      <el-col :span="12">
 
         <!--        文章信息-->
         <div class="grid-content ep-bg-purple ">
@@ -122,50 +122,50 @@
         </div>
 
       </el-col>
-      <el-col :span="7">
-        <div class="grid-content ep-bg-purple-light catalog_afafix common_affix_div">
-          <el-affix target=".catalog_afafix" :offset="300">
-            <div class="common_card_div_pc catalog_info_div ">
-              <b>目录</b>
-              <div id="catalog_content" class="catalog_detail_div">
-                <div v-for="cataItem in catalogTree.next" :key="cataItem">
-                  <div v-if="cataItem.type === 'H0' || cataItem.type === 'H1'">
-                    <a @click="catalogClick(cataItem.id)" :id="`a` + cataItem.id">
-                      {{ cataItem.name }}
-                    </a>
-                    <div>
-                      <!-- 这里貌似只展示了二级 -->
-                      <div v-for="item in cataItem.next" :key="item" :id="`a` + item.id"
-                           class="catalog_detail_h2"><a @click="catalogClick(item.id)">{{
-                          item.name
-                        }}</a>
-                        <div v-for="h3Item in item.next" :key="h3Item" :id="`a` + h3Item.id"
-                             class="catalog_detail_h3">
-                          <!-- 展示三级 -->
-                          <a @click="catalogClick(h3Item.id)">{{
-                              h3Item.name
-                            }}</a>
-                        </div>
-                      </div>
+<!--      <el-col :span="7">-->
+<!--        <div class="grid-content ep-bg-purple-light catalog_afafix common_affix_div">-->
+<!--          <el-affix target=".catalog_afafix" :offset="300">-->
+<!--            <div class="common_card_div_pc catalog_info_div ">-->
+<!--              <b>目录</b>-->
+<!--              <div id="catalog_content" class="catalog_detail_div">-->
+<!--                <div v-for="cataItem in catalogTree.next" :key="cataItem">-->
+<!--                  <div v-if="cataItem.type === 'H0' || cataItem.type === 'H1'">-->
+<!--                    <a @click="catalogClick(cataItem.id)" :id="`a` + cataItem.id">-->
+<!--                      {{ cataItem.name }}-->
+<!--                    </a>-->
+<!--                    <div>-->
+<!--                      &lt;!&ndash; 这里貌似只展示了二级 &ndash;&gt;-->
+<!--                      <div v-for="item in cataItem.next" :key="item" :id="`a` + item.id"-->
+<!--                           class="catalog_detail_h2"><a @click="catalogClick(item.id)">{{-->
+<!--                          item.name-->
+<!--                        }}</a>-->
+<!--                        <div v-for="h3Item in item.next" :key="h3Item" :id="`a` + h3Item.id"-->
+<!--                             class="catalog_detail_h3">-->
+<!--                          &lt;!&ndash; 展示三级 &ndash;&gt;-->
+<!--                          <a @click="catalogClick(h3Item.id)">{{-->
+<!--                              h3Item.name-->
+<!--                            }}</a>-->
+<!--                        </div>-->
+<!--                      </div>-->
 
-                      <div>
-                        <!-- 展示四级 -->
-                      </div>
-                      <div>
-                        <!-- 展示五级 -->
-                      </div>
-                      <div>
-                        <!-- 展示六级 -->
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </el-affix>
+<!--                      <div>-->
+<!--                        &lt;!&ndash; 展示四级 &ndash;&gt;-->
+<!--                      </div>-->
+<!--                      <div>-->
+<!--                        &lt;!&ndash; 展示五级 &ndash;&gt;-->
+<!--                      </div>-->
+<!--                      <div>-->
+<!--                        &lt;!&ndash; 展示六级 &ndash;&gt;-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </el-affix>-->
 
-        </div>
-      </el-col>
+<!--        </div>-->
+<!--      </el-col>-->
     </el-row>
     <UserLogin></UserLogin>
     <UserRegister></UserRegister>
@@ -531,6 +531,7 @@ code {
   }
 
   .info_text {
+    //text-align: center;
     text-align: justify;
     /*  在长单次或者URL进行换行 */
     word-wrap: break-word;

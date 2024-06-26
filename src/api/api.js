@@ -43,3 +43,10 @@ export function GetHotArticleList() {
         return response.data
     })
 }
+
+// ReportVisit 上报访问。
+export function ReportVisit(path){
+    return httpInstance.get("/openxm/api/v1/report?report_path="+path).then(function (response) {
+        return response.data
+    })
+}

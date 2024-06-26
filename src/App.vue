@@ -27,6 +27,7 @@
 
 import PageHeader from "@/page/header/header"
 import {CheckSession} from "@/api/auth_api";
+import {ReportVisit} from "@/api/api";
 
 export default {
   name: 'App',
@@ -56,6 +57,14 @@ export default {
     console.log("2023-08-19 22:27:00")
     // 这里应该初始化auth info. 从cookie.
     this.initXMUserFromLocalStorage()
+    // 延迟1S上报。
+    setTimeout(function () {
+        ReportVisit("index").then(function (response) {
+          if (response.code === 0) {
+            console.log("report success")
+          }
+        })
+    },1000)
   }
 }
 </script>

@@ -1,5 +1,6 @@
 const {defineConfig} = require('@vue/cli-service')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
+// const productionGzipExtensions = ['js', 'css', 'png']
 
 
 module.exports = defineConfig({
@@ -12,7 +13,7 @@ module.exports = defineConfig({
         config.plugin('compressionPlugin').use(
             new CompressionWebpackPlugin({
                 test: /\.(js|css|html)$/,
-                threshold: 1024, // 超过1K就压缩
+                threshold: 128, // 超过1K就压缩
             })
         )
     }

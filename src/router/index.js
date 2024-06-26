@@ -8,6 +8,7 @@ const route = () => import("@/page/root/root")
 const articleInfo = () => import("@/page/info/info_article")
 const archive = () => import("@/page/archived/archived.vue")
 const login =() => import("@/page/auth/login.vue")
+const talk = ()=> import("@/page/talk/talk.vue")
 
 const routes = [
     {path: "/", redirect: "/index.html"},
@@ -36,6 +37,11 @@ const routes = [
         name: "login",
         component:login,
     },
+    {
+        path: "/talk.html",
+        name :"talk",
+        component: talk,
+    }
 ]
 
 export const router = createRouter({

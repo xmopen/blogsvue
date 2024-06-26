@@ -29,6 +29,16 @@
                 </router-link>
               </li>
 
+<!--              <li class="header_li header_li_hover"-->
+<!--                  v-on:mouseover="mouseover(2)"-->
+<!--                  v-on:mouseout="mouseout"-->
+<!--                  v-bind:class="{nowClickLiCss:css_controller.li === 2 || css_controller.hover === 2}"-->
+<!--                  @click="headerLiClick(2)">-->
+<!--                <router-link to="/talk.html">-->
+<!--                  <div class="header_li_div">闲话</div>-->
+<!--                </router-link>-->
+<!--              </li>-->
+
 
             </ul>
 
