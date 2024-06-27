@@ -3,7 +3,7 @@
     <!--    TODO: 添加导航.-->
     <!--    如果是手机屏幕 则忽略掉某个组件即可.-->
     <!--    首页分屏2个部分-->
-    <el-row :gutter="30">
+    <el-row >
       <el-col :span="3" id="left_div">
         <div class="grid-content ep-bg-purple">
           <!--        <Me></Me>-->
@@ -15,7 +15,7 @@
         </div>
       </el-col>
       <!-- 需要添加置顶. -->
-      <el-col :span="6" class="right_div height_style">
+      <el-col :span="6" class="right_div height_style" >
         <div class="grid-content ep-bg-purple  affix_class_test affix_div">
           <el-affix target=".affix_class_test" :offset="200">
             <Index_right_hot></Index_right_hot>
@@ -51,10 +51,12 @@ export default {
 /*  手机CSS.*/
 @media screen and (max-width: 768px) {
   #left_div {
-    display: none;
+    width: 100vh;
+    margin-left: 100px;
   }
 
-  .layout_div {
+  .right_div {
+    display: none;
   }
 }
 
@@ -71,8 +73,8 @@ export default {
   }
 
   #middle_div {
-    padding-left: 20em;
-    margin-left: -2em;
+    /* padding-left: 20em;
+    margin-left: -2em; */
   }
 
   .grid-content {

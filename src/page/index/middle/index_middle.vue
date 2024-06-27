@@ -6,7 +6,7 @@
         <!--      分两部分,图片和描述-->
         <div class="middle_card_div" v-on:mouseover="mouseover(index)" v-on:mouseout="mouseout(index)">
           <!--右上角标签-->
-          <div style="z-index: 999999">
+          <div class="index_middle_art_tag">
             <div class="a">
               <div class="b">
                 <span>{{ item.type }}</span>
@@ -15,12 +15,11 @@
           </div>
 
           <div class="index_middle_art_img" v-bind:class="{shadowDropCenter:isSlideFwdCenter[index]}">
-            <img class="kenburns-left" :src="item.img" style="width: 100%;" alt="">
+            <img class="kenburns-left" :src="item.img" style="width: 100%; height: 100%;" alt="">
           </div>
 
-          <router-link :to="`/article/info.html?` + item.id">
+          <router-link :to="`/article/info.html?` + item.id" class="index_middle_art_link">
             <div class="index_middle_art_desc">
-              <div>
                 <div class="index_middle_art_desc_author bounce-in-left">
                   {{ item.author }}
                 </div>
@@ -32,8 +31,6 @@
                 <div class="index_middle_art_desc_title tracking-in-contract">
                   {{ item.title }}
                 </div>
-
-              </div>
             </div>
           </router-link>
         </div>
@@ -93,19 +90,29 @@ export default {
 
 @import "../../../css/animation.css";
 
-
 @media screen and (max-width: 768px) {
-  /*  移动端.*/
+
+  .index_middle_art_link{
+    
+  }
+  .index_middle_art_desc {
+    font-size: 10px;
+    
+  }
+
+  
 }
 
-@media screen and (min-width: 768px) {
-
-  /*  PC*/
-  /**/
+@media screen  {
+  /*  移动端.*/
   .middle_card_div {
     height: 300px;
     margin-bottom: 50px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+  .index_middle_art_tag {
+    position: relative;
+    z-index: 20;
   }
 
   .index_middle_art_list {
@@ -131,7 +138,7 @@ export default {
     bottom: 0;
     display: block;
     width: 100%;
-  //text-align: center; background-color: #b8e245;
+    text-align: center; background-color: #b8e245;
   }
 
   .index_middle_art_img {
@@ -183,4 +190,6 @@ export default {
     padding: 0.2em 0.5em;
   }
 }
+
+
 </style>
