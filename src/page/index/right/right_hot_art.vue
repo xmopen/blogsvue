@@ -60,6 +60,9 @@ export default {
 
 /* 移动 */
 @media screen and (max-width: 768px) {
+  .common_card_div_pc{
+    display: none;
+  }
 }
 
 /* PC */
