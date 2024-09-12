@@ -28,14 +28,6 @@ export function CheckSession(token) {
 }
 
 // SendGenerateMailCode 生成验证码。
-// TODO。afafafafaf
-///fafafa
-
-//fafaf
-// fafaf
-
-
-//fafafaf
 export function SendGenerateMailCode(data){
     return httpInstance.post("/openxm/api/v1/mail/generate/code",data).then(function (response) {
         return response.data

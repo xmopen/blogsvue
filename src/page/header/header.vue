@@ -116,10 +116,6 @@ export default {
 /*PC CSS样式*/
 @media screen and (min-width: 768px) {
 
-  .div_border_test {
-    border: 1px red solid;
-  }
-
   .header_div {
   //background-image: url("https://blogs-1303903194.cos.ap-beijing.myqcloud.com/blogs/1719415393贝壳-4k.jpg"); //background-image: url("https://blogs-1303903194.cos.ap-beijing.myqcloud.com/blogs/1705506261black_boat_mini.png"); //background-image: url("../../assets/black_boat.png"); width: 100%; top: 0; background-color: #f7f7f7; z-index: 99999;
     /*水平居中*/

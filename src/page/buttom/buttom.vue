@@ -6,8 +6,7 @@
     </div>
 
     <div class="buttom_div_common buttom_div_text buttom_div_name">小馬技术Log	</div>
-
-    <div class="buttom_div_common buttom_div_text">豫ICP备2023020196号-1</div>
+    <div class="buttom_div_common buttom_div_text"> <a href="https://beian.miit.gov.cn"> 豫ICP备2023020196号-1</a>> </div>
 
   </div>
 </template>

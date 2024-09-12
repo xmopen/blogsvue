@@ -129,7 +129,22 @@ export default {
         })
         return
       }
-      SendGenerateMailCode(this.userInfo.mail)
+      // 提示信息
+      SendGenerateMailCode(this.userInfo.mail).then((response)=>{
+        if (response.code !== 0) {
+          ElNotification({
+            title: 'Error',
+            message: response.message,
+            type: 'error',
+          })
+          return
+        }
+        ElNotification({
+          title: 'success',
+          message: "邮件已发送，注意查收。",
+          type: 'error',
+        })
+      })
     },
     checkMailIsValid(){
       if (this.userInfo.mail === "") {
