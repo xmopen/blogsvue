@@ -3,7 +3,8 @@ import axios from "axios";
 // httpInstance http 请求实例.
 const httpInstance = axios.create({
     // baseURL:"http://127.0.0.1:8849",
-    baseURL:"http://openxm.cn",
+    baseURL:"http://43.136.18.173",
+    // baseURL:"http://openxm.cn",
     timeout:5000,
 })
 
@@ -27,15 +28,6 @@ export function CheckSession(token) {
     })
 }
 
-// SendGenerateMailCode 生成验证码。
-// TODO。afafafafaf
-///fafafa
-
-//fafaf
-// fafaf
-
-
-//fafafaf
 export function SendGenerateMailCode(data){
     return httpInstance.post("/openxm/api/v1/mail/generate/code",data).then(function (response) {
         return response.data

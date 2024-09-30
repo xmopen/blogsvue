@@ -2,7 +2,8 @@ import axios from "axios";
 
 // httpInstance http 请求实例.
 const httpInstance = axios.create({
-    baseURL: "http://openxm.cn",
+    baseURL: "http://43.136.18.173",
+    // baseURL: "http://openxm.cn",
     // baseURL: "http://127.0.0.1:8848",
     timeout: 5000,
 })

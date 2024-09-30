@@ -53,119 +53,76 @@
           </div>
         </div>
 
-        <div class="article_common_div">
-          <div class="article_common_top_div" @click="clickComment">
-            <!--              评论-->
-            <el-button type="success" class="article_common_button">
-              <el-icon style="margin-right: 0.3em">
-                <EditPen/>
-              </el-icon>
-              回复讨论
-            </el-button>
-          </div>
-        </div>
+<!--        <div class="article_common_div">-->
+<!--          <div class="article_common_top_div" @click="clickComment">-->
+<!--            &lt;!&ndash;              评论&ndash;&gt;-->
+<!--            <el-button type="success" class="article_common_button">-->
+<!--              <el-icon style="margin-right: 0.3em">-->
+<!--                <EditPen/>-->
+<!--              </el-icon>-->
+<!--              回复讨论-->
+<!--            </el-button>-->
+<!--          </div>-->
+<!--        </div>-->
 
-        <el-drawer
-            :size="500"
-            v-model="comment.buttomDrawer"
-            :show-close="false"
-            direction="btt"
-            :before-close="handleClose"
-        >
-          <!--          template 这里就相当于透传下去了,事件也都透传下去了.-->
-          <template #header="{close,titleId,titleClass}">
-            <div :id="titleId" :class="titleClass">
-              <el-button style="float: left" type="" @click="close">
-                取消
-              </el-button>
-            </div>
-            <el-button type="warning" @click="submitComment">
-              <el-icon style="margin-right: 0.1em;margin-left: -1em">
-                <Position/>
-              </el-icon>
-              回复评论
-            </el-button>
-          </template>
-          <!--comment-->
-          <div class="buttom_comment_div">
-            <div id="buttom_comment_id">
-            </div>
-          </div>
-        </el-drawer>
-        <!--        回复列表-->
-        <div class="article_comment_list_div" id="article_comment_list_id">
-          <div class="article_common_top_div article_comment_item_div" v-for="(item,index) in comment.list"
-               :key="index">
-            <!--            img以及昵称-->
-            <div>
-              <div class="article_comment_img_div">
-                <img :src="item.icon" alt="" style="width: 32px;height: 32px;border-radius: 8px">
-              </div>
-              <div class="article_comment_name_span">
-                <span>{{ item.username }}</span>
-              </div>
-              <!--              右侧楼层、地区、时间-->
-              <div class="article_comment_right_div">
-                <span class="article_comment_right_span">{{item.commentLevel}}&nbsp;楼</span>
-                <span style="margin-left: 0.1em"> > </span>
-                <span class="article_comment_right_span">来自{{item.city}} </span>
-                <span style="margin-left: 0.1em"> > </span>
-                <span class="article_comment_right_span">{{item.comment_time}}</span>
-              </div>
-            </div>
-
-            <!--评论渲染: 这里可能没有HTML没有渲染后面新添加的评论-->
-            <div :id="index" class="article_comment_content_div">
-            </div>
-
-          </div>
-        </div>
-
-      </el-col>
-<!--      <el-col :span="7">-->
-<!--        <div class="grid-content ep-bg-purple-light catalog_afafix common_affix_div">-->
-<!--          <el-affix target=".catalog_afafix" :offset="300">-->
-<!--            <div class="common_card_div_pc catalog_info_div ">-->
-<!--              <b>目录</b>-->
-<!--              <div id="catalog_content" class="catalog_detail_div">-->
-<!--                <div v-for="cataItem in catalogTree.next" :key="cataItem">-->
-<!--                  <div v-if="cataItem.type === 'H0' || cataItem.type === 'H1'">-->
-<!--                    <a @click="catalogClick(cataItem.id)" :id="`a` + cataItem.id">-->
-<!--                      {{ cataItem.name }}-->
-<!--                    </a>-->
-<!--                    <div>-->
-<!--                      &lt;!&ndash; 这里貌似只展示了二级 &ndash;&gt;-->
-<!--                      <div v-for="item in cataItem.next" :key="item" :id="`a` + item.id"-->
-<!--                           class="catalog_detail_h2"><a @click="catalogClick(item.id)">{{-->
-<!--                          item.name-->
-<!--                        }}</a>-->
-<!--                        <div v-for="h3Item in item.next" :key="h3Item" :id="`a` + h3Item.id"-->
-<!--                             class="catalog_detail_h3">-->
-<!--                          &lt;!&ndash; 展示三级 &ndash;&gt;-->
-<!--                          <a @click="catalogClick(h3Item.id)">{{-->
-<!--                              h3Item.name-->
-<!--                            }}</a>-->
-<!--                        </div>-->
-<!--                      </div>-->
-
-<!--                      <div>-->
-<!--                        &lt;!&ndash; 展示四级 &ndash;&gt;-->
-<!--                      </div>-->
-<!--                      <div>-->
-<!--                        &lt;!&ndash; 展示五级 &ndash;&gt;-->
-<!--                      </div>-->
-<!--                      <div>-->
-<!--                        &lt;!&ndash; 展示六级 &ndash;&gt;-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
+<!--        <el-drawer-->
+<!--            :size="500"-->
+<!--            v-model="comment.buttomDrawer"-->
+<!--            :show-close="false"-->
+<!--            direction="btt"-->
+<!--            :before-close="handleClose"-->
+<!--        >-->
+<!--          &lt;!&ndash;          template 这里就相当于透传下去了,事件也都透传下去了.&ndash;&gt;-->
+<!--          <template #header="{close,titleId,titleClass}">-->
+<!--            <div :id="titleId" :class="titleClass">-->
+<!--              <el-button style="float: left" type="" @click="close">-->
+<!--                取消-->
+<!--              </el-button>-->
+<!--            </div>-->
+<!--            <el-button type="warning" @click="submitComment">-->
+<!--              <el-icon style="margin-right: 0.1em;margin-left: -1em">-->
+<!--                <Position/>-->
+<!--              </el-icon>-->
+<!--              回复评论-->
+<!--            </el-button>-->
+<!--          </template>-->
+<!--          &lt;!&ndash;comment&ndash;&gt;-->
+<!--          <div class="buttom_comment_div">-->
+<!--            <div id="buttom_comment_id">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </el-drawer>-->
+<!--        &lt;!&ndash;        回复列表&ndash;&gt;-->
+<!--        <div class="article_comment_list_div" id="article_comment_list_id">-->
+<!--          <div class="article_common_top_div article_comment_item_div" v-for="(item,index) in comment.list"-->
+<!--               :key="index">-->
+<!--            &lt;!&ndash;            img以及昵称&ndash;&gt;-->
+<!--            <div>-->
+<!--              <div class="article_comment_img_div">-->
+<!--                <img :src="item.icon" alt="" style="width: 32px;height: 32px;border-radius: 8px">-->
+<!--              </div>-->
+<!--              <div class="article_comment_name_span">-->
+<!--                <span>{{ item.username }}</span>-->
+<!--              </div>-->
+<!--              &lt;!&ndash;              右侧楼层、地区、时间&ndash;&gt;-->
+<!--              <div class="article_comment_right_div">-->
+<!--                <span class="article_comment_right_span">{{item.commentLevel}}&nbsp;楼</span>-->
+<!--                <span style="margin-left: 0.1em"> > </span>-->
+<!--                <span class="article_comment_right_span">来自{{item.city}} </span>-->
+<!--                <span style="margin-left: 0.1em"> > </span>-->
+<!--                <span class="article_comment_right_span">{{item.comment_time}}</span>-->
 <!--              </div>-->
 <!--            </div>-->
-<!--          </el-affix>-->
 
+<!--            &lt;!&ndash;评论渲染: 这里可能没有HTML没有渲染后面新添加的评论&ndash;&gt;-->
+<!--            <div :id="index" class="article_comment_content_div">-->
+<!--            </div>-->
+
+<!--          </div>-->
 <!--        </div>-->
-<!--      </el-col>-->
+
+      </el-col>
+
     </el-row>
     <UserLogin></UserLogin>
     <UserRegister></UserRegister>
