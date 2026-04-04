@@ -58,9 +58,9 @@ export default {
 @import "../../../css/common.css";
 @import "../../../css/animation.css";
 
-/* 移动 */
-@media screen and (max-width: 768px) {
-  .common_card_div_pc{
+/* 移动：首页右侧栏在 layout 中 v-if(md) 已不挂载；此处兜底防止单独引用时露出 */
+@media screen and (max-width: 991px) {
+  .common_card_div_pc {
     display: none;
   }
 }

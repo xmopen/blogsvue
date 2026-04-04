@@ -2,10 +2,10 @@
   <div class="common_background_color">
     <!--  style="display: none;" -->
     <PageHeader class="page_header_div"></PageHeader>
-    <div class="router_view_div">
+    <div class="router_view_div app-main-view">
       <router-view></router-view>
     </div>
-    <el-backtop :bottom="100">
+    <el-backtop class="app-backtop" :bottom="backTopOffset">
       <div
           style="
         height: 100%;
@@ -32,6 +32,28 @@ import {ReportVisit} from "@/api/api";
 export default {
   name: 'App',
   components: {PageHeader},
+  data() {
+    return {
+      isNarrow: typeof window !== 'undefined' && window.innerWidth <= 768,
+    }
+  },
+  computed: {
+    backTopOffset() {
+      return this.isNarrow ? 72 : 100
+    },
+  },
+  mounted() {
+    const vm = this
+    this._onResize = function () {
+      vm.isNarrow = window.innerWidth <= 768
+    }
+    window.addEventListener('resize', this._onResize)
+  },
+  beforeUnmount() {
+    if (this._onResize) {
+      window.removeEventListener('resize', this._onResize)
+    }
+  },
   methods: {
     initXMUserFromLocalStorage() {
       let thisVue = this
@@ -78,9 +100,26 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   width: 100%;
+  min-height: 100%;
   height: 100%;
   padding: 0;
   margin: 0;
+}
+
+/* 主内容区默认左对齐，避免继承 #app 的 center 导致时间线、文章块居中错位 */
+.app-main-view {
+  text-align: left;
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+@media screen and (max-width: 768px) {
+  .app-backtop {
+    right: 12px !important;
+  }
 }
 
 /*美化滚动条*/

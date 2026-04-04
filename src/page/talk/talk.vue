@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <el-row>
-      <el-col :span="8">
+  <div class="talk-page">
+    <el-row :gutter="8">
+      <el-col :xs="24" :sm="8">
         <div class="grid-content ep-bg-purple test-border">11111</div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="8">
         <div class="grid-content ep-bg-purple-light test-border">111</div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="8">
         <div class="grid-content ep-bg-purple test-border">111</div>
       </el-col>
     </el-row>
@@ -28,7 +28,13 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
+.talk-page {
+  box-sizing: border-box;
+  padding: 2em var(--app-gutter, 0.75rem);
+  max-width: 100%;
+}
+
 @media screen and (min-width: 768px) {
   .el-col {
     border-radius: 4px;

@@ -51,3 +51,14 @@ export function ReportVisit(path){
         return response.data
     })
 }
+
+/** 日志列表：固定 type=20，与首页列表同一套响应结构 { code, data: [] } */
+const LOG_LIST_TYPE = 20
+
+export function LogList(offset, limit) {
+    return httpInstance.get(
+        "/openxm/api/v1/index/list/by_type?type=" + LOG_LIST_TYPE + "&limit=" + limit + "&offset=" + offset
+    ).then(function (response) {
+        return response.data
+    })
+}

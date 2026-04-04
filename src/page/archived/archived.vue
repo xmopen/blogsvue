@@ -1,14 +1,14 @@
 <template>
   <div class="archive_div" style="text-align: left">
     <div>
-      <el-row>
-        <el-col :span="5">
+      <el-row :gutter="0">
+        <el-col :xs="0" :sm="0" :md="5">
           <div class="grid-content ep-bg-purple"/>
         </el-col>
 
         <!--        左侧目录-->
-        <el-col :span="4">
-          <div style="margin-top: 3em">
+        <el-col :xs="24" :sm="24" :md="4">
+          <div class="archive-col-inner">
             <div class="grid-content ep-bg-purple"/>
             <el-timeline>
               <el-timeline-item v-for="(item,index) in list"
@@ -26,9 +26,9 @@
         </el-col>
 
         <!--        右侧该目录下具体列表-->
-        <el-col :span="10">
+        <el-col :xs="24" :sm="24" :md="10">
 
-          <div id="article_list" style="margin-top: 3em">
+          <div id="article_list" class="archive-col-inner">
             <div class="grid-content ep-bg-purple"/>
 
             <el-timeline>
@@ -61,7 +61,7 @@
           </div>
 
         </el-col>
-        <el-col :span="5">
+        <el-col :xs="0" :sm="0" :md="5">
           <div class="grid-content ep-bg-purple-light"/>
         </el-col>
       </el-row>
@@ -153,6 +153,16 @@ export default {
 @import "../../css/common.css";
 @import "../../css/animation.css";
 
+.archive-col-inner {
+  margin-top: 3em;
+}
+
+@media screen and (max-width: 768px) {
+  .archive-col-inner {
+    margin-top: 2em;
+  }
+}
+
 .archive_list_item_div {
   border-radius: 4px;
   margin-top: 1.5em;
@@ -207,6 +217,29 @@ export default {
   border-radius: 3px;
   background-color: #409eff;
   margin-right: 1em;
+}
+
+@media screen and (max-width: 768px) {
+  .archive_div {
+    padding-left: var(--app-gutter, 0.75rem);
+    padding-right: var(--app-gutter, 0.75rem);
+    box-sizing: border-box;
+  }
+
+  .article_title_div {
+    font-size: clamp(15px, 4vw, 18px);
+    word-break: break-word;
+  }
+
+  .archive_article_list_item_card .article_item_div:hover {
+    transform: none;
+  }
+
+  .archive_list_item_div {
+    width: auto;
+    min-width: 4.5em;
+    max-width: 100%;
+  }
 }
 
 </style>

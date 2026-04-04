@@ -10,6 +10,7 @@ const archive = () => import("@/page/archived/archived.vue")
 const login =() => import("@/page/auth/login.vue")
 const talk = ()=> import("@/page/talk/talk.vue")
 const userLoginOrRegister = () => import("@/page/user/login.vue")
+const logPage = () => import("@/page/log/log.vue")
 
 const routes = [
     {path: "/", redirect: "/index.html"},
@@ -47,6 +48,11 @@ const routes = [
         path: "/auth/v2.html",
         name: "userLoginOrRegister",
         component:userLoginOrRegister,
+    },
+    {
+        path: "/log.html",
+        name: "logPage",
+        component: logPage,
     }
 ]
 

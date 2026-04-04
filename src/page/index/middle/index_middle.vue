@@ -5,10 +5,10 @@
       <div class="infinite-list-item" v-for="(item,index) in indexListData" :key="index">
         <!--      分两部分,图片和描述-->
         <div class="middle_card_div" v-on:mouseover="mouseover(index)" v-on:mouseout="mouseout(index)">
-          <!--右上角标签-->
-          <div class="index_middle_art_tag">
+          <!--右上角飘条（与日志页 log.vue 一致）-->
+          <div class="log_ribbon_wrap">
             <div class="a">
-              <div class="b">
+              <div class="b" :style="{ '--ribbon-bg': ribbonColor(item.type) }">
                 <span>{{ item.type }}</span>
               </div>
             </div>
@@ -45,6 +45,8 @@
 import {IndexList} from "@/api/api"
 import {ElMessage} from "element-plus";
 
+const RIBBON_PALETTE = ["#b8e245", "#95d5b2", "#e17055", "#fdcb6e", "#74b9ff"]
+
 export default {
   name: "index_middle",
   data() {
@@ -56,6 +58,14 @@ export default {
     }
   },
   methods: {
+    ribbonColor(type) {
+      const s = type || ""
+      let h = 0
+      for (let i = 0; i < s.length; i++) {
+        h = (h + s.charCodeAt(i) * 17) % RIBBON_PALETTE.length
+      }
+      return RIBBON_PALETTE[h]
+    },
     loadArticleList() {
         this.getIndexArticleList(this.offset, this.limit)
         this.offset += this.limit
@@ -90,65 +100,146 @@ export default {
 
 @import "../../../css/animation.css";
 
-@media screen and (max-width: 768px) {
-
-  .index_middle_art_link{
-    
-  }
-  .index_middle_art_desc {
-    font-size: 10px;
-    
-  }
-
-  
+/* 与 src/page/log/log.vue 飘条同结构、同配色逻辑 */
+.log_ribbon_wrap {
+  position: relative;
+  z-index: 20;
 }
 
-@media screen  {
-  /*  移动端.*/
+.a {
+  position: relative;
+}
+
+.b {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  transform: rotate(45deg);
+}
+
+.b span {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: var(--ribbon-bg, #b8e245);
+  color: #2d3436;
+  font-size: clamp(10px, 2.5vw, 12px);
+}
+
+.middle_card_div {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.index_middle_art_img {
+  overflow: hidden;
+}
+
+.index_middle_art_img img {
+  width: 100%;
+  transition: all 0.6s;
+}
+
+.index_middle_art_desc {
+  text-align: left;
+}
+
+.index_middle_art_desc_classify {
+  display: inline-block;
+  float: left;
+  border-radius: 5%;
+  background-color: #ffa39e;
+}
+
+.index_middle_art_desc_title {
+  display: inline-block;
+  margin-left: 2em;
+}
+
+.index_middle_art_desc_time {
+  display: inline-block;
+  margin-left: 2em;
+  border-radius: 3px;
+  background-color: #ffa940;
+  padding: 0.2em 0.5em;
+}
+
+.index_middle_art_desc_author {
+  display: inline-block;
+  margin-left: 2em;
+  border-radius: 4px;
+  background-color: pink;
+  padding: 0.2em 0.5em;
+}
+
+/* 与首页 layout 横向 padding 对齐，避免重复留白 */
+@media screen and (max-width: 991px) {
+  .index_middle_art_list {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .index_middle_art_desc {
+    font-size: clamp(11px, 3.2vw, 13px);
+    margin-top: 0.85em;
+    margin-left: 0.65em;
+    height: auto;
+    min-height: 18%;
+  }
+
+  .index_middle_art_desc_title {
+    margin-left: 0.75em;
+    display: block;
+    margin-top: 0.35em;
+  }
+
+  .index_middle_art_desc_time,
+  .index_middle_art_desc_author {
+    margin-left: 0.65em;
+    margin-right: 0.35em;
+  }
+
+  .middle_card_div {
+    height: auto;
+    min-height: 220px;
+    max-height: 78vh;
+    margin-bottom: 1.75rem;
+  }
+
+  .index_middle_art_img {
+    height: 58%;
+    min-height: 140px;
+    max-height: 42vh;
+  }
+
+  .b {
+    width: 88px;
+    height: 88px;
+    top: -44px;
+    right: -44px;
+  }
+}
+
+@media screen and (min-width: 769px) {
   .middle_card_div {
     height: 300px;
     margin-bottom: 50px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  }
-  .index_middle_art_tag {
-    position: relative;
-    z-index: 20;
   }
 
   .index_middle_art_list {
     margin-left: 1em;
   }
 
-  /*参考: https://blog.csdn.net/qq_39473019/article/details/103634666*/
-  .a {
-    position: relative;
-  }
-
-  .b {
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    top: -50px;
-    right: -50px;
-    transform: rotate(45deg);
-  }
-
-  .b span {
-    position: absolute;
-    bottom: 0;
-    display: block;
-    width: 100%;
-    text-align: center; background-color: #b8e245;
-  }
-
   .index_middle_art_img {
-    overflow: hidden;
     height: 80%;
-  }
-
-  .index_middle_art_img img {
-    width: 100%;
-    transition: all 0.6s;
   }
 
   .index_middle_art_img img:hover {
@@ -159,37 +250,7 @@ export default {
     margin-top: 1.2em;
     margin-left: 1em;
     height: 20%;
-    text-align: left;
-  }
-
-  .index_middle_art_desc_classify {
-    display: inline-block;
-    float: left;
-    border-radius: 5%;
-    background-color: #ffa39e;
-  }
-
-  .index_middle_art_desc_title {
-    display: inline-block;
-    margin-left: 2em;
-  }
-
-  .index_middle_art_desc_time {
-    display: inline-block;
-    margin-left: 2em;
-    border-radius: 3px;
-    background-color: #ffa940;
-    padding: 0.2em 0.5em;
-  }
-
-  .index_middle_art_desc_author {
-    display: inline-block;
-    margin-left: 2em;
-    border-radius: 4px;
-    background-color: pink;
-    padding: 0.2em 0.5em;
   }
 }
-
 
 </style>

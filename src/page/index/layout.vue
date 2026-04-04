@@ -1,66 +1,65 @@
 <template>
   <div class="layout_div">
-    <!--    TODO: 添加导航.-->
-    <!--    如果是手机屏幕 则忽略掉某个组件即可.-->
-    <!--    首页分屏2个部分-->
-    <el-row >
-      <el-col :span="3" id="left_div">
-        <div class="grid-content ep-bg-purple">
-          <!--        <Me></Me>-->
-        </div>
+    <!-- 手机 / 平板：仅中间文章列表；桌面（≥md）：左留白 + 列表 + 右侧 Hot -->
+    <el-row :gutter="0">
+      <el-col v-if="mdAndUp" :md="3" :lg="3" id="left_div">
+        <div class="grid-content ep-bg-purple"/>
       </el-col>
-      <el-col :span="11" id="middle_div">
+      <el-col :xs="24" :sm="24" :md="11" id="middle_div">
         <div class="grid-content ep-bg-purple-light">
-          <Index_middle></Index_middle>
+          <Index_middle/>
         </div>
       </el-col>
-      <!-- 需要添加置顶. -->
-      <el-col :span="6" class="right_div height_style" >
-        <div class="grid-content ep-bg-purple  affix_class_test affix_div">
+      <el-col
+          v-if="mdAndUp"
+          :md="6"
+          :lg="6"
+          class="right_div height_style"
+      >
+        <div class="grid-content ep-bg-purple affix_class_test affix_div">
           <el-affix target=".affix_class_test" :offset="200">
-            <Index_right_hot></Index_right_hot>
+            <Index_right_hot/>
           </el-affix>
-          <!--              首期先不实现,后续实现-->
-          <!--          <el-affix target=".affix_class_test" :offset="1200">-->
-          <!--            <IndexRightInternetProvider></IndexRightInternetProvider>-->
-          <!--          </el-affix>-->
-
         </div>
       </el-col>
     </el-row>
   </div>
 
-  <!--  底部备案信息.-->
-  <ButtomPage></ButtomPage>
-
+  <ButtomPage/>
 </template>
 
 <script>
 
-import Index_middle from "@/page/index/middle/index_middle";
+import Index_middle from "@/page/index/middle/index_middle"
 import Index_right_hot from "@/page/index/right/right_hot_art.vue"
 import ButtomPage from "@/page/buttom/buttom"
+import screenLayout from "@/mixins/screenLayout"
 
 export default {
   name: "IndexPage",
+  mixins: [screenLayout],
   components: {Index_middle, Index_right_hot, ButtomPage},
 }
 </script>
 
 <style scoped>
-/*  手机CSS.*/
-@media screen and (max-width: 768px) {
-  #left_div {
-    width: 100vh;
-    margin-left: 100px;
+@media screen and (max-width: 991px) {
+  .layout_div {
+    padding-top: 2em;
+    overflow: visible;
+    padding-left: var(--app-gutter, 0.75rem);
+    padding-right: var(--app-gutter, 0.75rem);
+    box-sizing: border-box;
   }
 
-  .right_div {
-    display: none;
+  #middle_div {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 100%;
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
 
   #left_div {
     margin-left: 3.5em;
@@ -70,11 +69,6 @@ export default {
     height: 100%;
     overflow: hidden;
     padding-top: 3em;
-  }
-
-  #middle_div {
-    /* padding-left: 20em;
-    margin-left: -2em; */
   }
 
   .grid-content {

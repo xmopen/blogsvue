@@ -1,3 +1,14 @@
+/* --- 全局响应式变量与基底（与各页 media 配合使用） --- */
+:root {
+  --app-gutter: clamp(0.65rem, 3.5vw, 1.25rem);
+  --app-max-content: 72rem;
+  --app-touch-target: 44px;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 /* 参考: https://getcssscan.com/css-box-shadow-examples?ref=producthunt */
 .common_card_div_pc {
     overflow: hidden;

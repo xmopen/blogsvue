@@ -3,8 +3,8 @@
     <!-- 文章详情页面应该只显示和文章相关的内容(内容+目录),其他一律不显示 -->
     <el-row>
 
-      <el-col :span="6"></el-col>
-      <el-col :span="12">
+      <el-col :xs="0" :md="6"></el-col>
+      <el-col :xs="24" :md="12">
 
         <!--        文章信息-->
         <div class="grid-content ep-bg-purple ">
@@ -426,10 +426,65 @@ code {
 
 /* 移动 */
 @media screen and (max-width: 768px) {
+  .info_div {
+    padding-top: 2em;
+    padding-left: var(--app-gutter, 0.75rem);
+    padding-right: var(--app-gutter, 0.75rem);
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .article_info_div {
+    padding: 0.75rem 0.85rem !important;
+  }
+
+  .article_info_title_div {
+    font-size: clamp(1.1rem, 4vw, 1.35rem);
+    word-break: break-word;
+  }
+
+  .article_user_info_div {
+    margin-top: 0.75em;
+  }
+
+  .article_user_div {
+    margin-left: 0;
+    margin-bottom: 0.5em;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .article_info_desc {
+    margin-left: 0.5em;
+    margin-top: 0.15em;
+    font-size: clamp(12px, 3.2vw, 14px);
+  }
+
+  .info_text {
+    text-align: left;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .article_content {
+    margin-top: 0;
+  }
+
+  .div_subhead {
+    height: auto;
+    min-height: 2.75em;
+    padding-bottom: 0.5em;
+  }
+
+  .div_subhead_text {
+    padding-top: 0.55em;
+    padding-bottom: 0.35em;
+  }
 }
 
 /* PC */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 769px) {
 
   .info_div {
     padding-top: 3em;
@@ -613,3 +668,4 @@ code {
 }
 
 </style>
+
